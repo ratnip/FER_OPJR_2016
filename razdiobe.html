@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Programirajmo u R-u - old</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Udžbenik za vještinu ‘Osnove programskog jezika R’ na Fakultetu elektrotehnike i računarstva, Sveučilište u Zagrebu.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Programirajmo u R-u - old" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Udžbenik za vještinu ‘Osnove programskog jezika R’ na Fakultetu elektrotehnike i računarstva, Sveučilište u Zagrebu." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Programirajmo u R-u - old" />
+  
+  <meta name="twitter:description" content="Udžbenik za vještinu ‘Osnove programskog jezika R’ na Fakultetu elektrotehnike i računarstva, Sveučilište u Zagrebu." />
+  
+
+<meta name="author" content="Damir Pintar">
+
+
+<meta name="date" content="2017-08-23">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="vizualizacija-podataka-uz-paket-ggplot2.html">
+<link rel="next" href="deskriptivna.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<style type="text/css">
+.showopt {
+  background-color: #004c93;
+  color: #FFFFFF; 
+  width: 140px;
+  height: 4	0px;
+  text-align: center;
+  vertical-align: middle !important;
+  float: right;
+  font-family: sans-serif;
+  font-size:10 pt;
+  border-radius: 8px;
+}
+
+.showopt:hover {
+    background-color: #dfe4f2;
+    color: #004c93;
+}
+
+pre.plot {
+  background-color: white !important;
+}
+</style>
+
+<script>
+ $(document).ready(function() {
+
+  $chunks = $('.fold');
+
+  $chunks.each(function () {
+
+    // add button to source code chunks
+    if ( $(this).hasClass('s') ) {
+      $('pre.r', this).prepend("<div class=\"showopt\">Prikaži rješenje</div><br style=\"line-height:22px;\"/>");
+      $('pre.r', this).children('code').attr('class', 'folded');
+    }
+
+    // add button to output chunks
+    if ( $(this).hasClass('o') ) {
+      $('pre:not(.r)', this).has('code').prepend("<div class=\"showopt\">Prikaži ispis</div><br style=\"line-height:22px;\"/>");
+      $('pre:not(.r)', this).children('code:not(r)').addClass('folded');
+
+      // add button to plots
+      $(this).find('img').wrap('<pre class=\"plot\"></pre>');
+      $('pre.plot', this).prepend("<div class=\"showopt\">Prikaži sliku</div><br style=\"line-height:22px;\"/>");
+      $('pre.plot', this).children('img').addClass('folded');
+
+    }
+  });
+
+  // hide all chunks when document is loaded
+  $('.folded').css('display', 'none')
+
+  // function to toggle the visibility
+  $('.showopt').click(function() {
+    var label = $(this).html();
+    if (label.indexOf("Prikaži") >= 0) {
+      $(this).html(label.replace("Prikaži", "Sakrij"));
+    } else {
+      $(this).html(label.replace("Sakrij", "Prikaži"));
+    }
+    $(this).siblings('code, img').slideToggle('fast', 'swing');
+  });
+});
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>(Udžbenik za vještinu “Osnove programskog jezika R”)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#predgovor"><i class="fa fa-check"></i>Predgovor</a></li>
+</ul></li>
+<li class="part"><span><b>I Osnovni elementi jezika R</b></span></li>
+<li class="chapter" data-level="1" data-path="uvod.html"><a href="uvod.html"><i class="fa fa-check"></i><b>1</b> Uvod</a><ul>
+<li class="chapter" data-level="1.1" data-path="uvod.html"><a href="uvod.html#sto-je-programski-jezik-r"><i class="fa fa-check"></i><b>1.1</b> Što je programski jezik R?</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="uvod.html"><a href="uvod.html#opcenito-o-r-u"><i class="fa fa-check"></i><b>1.1.1</b> Općenito o R-u</a></li>
+<li class="chapter" data-level="1.1.2" data-path="uvod.html"><a href="uvod.html#alternative-jeziku-r"><i class="fa fa-check"></i><b>1.1.2</b> Alternative jeziku R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="uvod.html"><a href="uvod.html#instalacija-programske-podrske"><i class="fa fa-check"></i><b>1.2</b> Instalacija programske podrške</a></li>
+<li class="chapter" data-level="1.3" data-path="uvod.html"><a href="uvod.html#pregled-razvojnog-sucelja-rstudio"><i class="fa fa-check"></i><b>1.3</b> Pregled razvojnog sučelja <em>RStudio</em></a><ul>
+<li class="chapter" data-level="1.3.1" data-path="uvod.html"><a href="uvod.html#interaktivna-konzola"><i class="fa fa-check"></i><b>1.3.1</b> Interaktivna konzola</a></li>
+<li class="chapter" data-level="1.3.2" data-path="uvod.html"><a href="uvod.html#pisanje-r-skripti"><i class="fa fa-check"></i><b>1.3.2</b> Pisanje R skripti</a></li>
+<li class="chapter" data-level="1.3.3" data-path="uvod.html"><a href="uvod.html#r-markdown"><i class="fa fa-check"></i><b>1.3.3</b> <em>R Markdown</em></a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="uvod.html"><a href="uvod.html#kako-koristiti-ovaj-udzbenik"><i class="fa fa-check"></i><b>1.4</b> Kako koristiti ovaj udžbenik?</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tipovi.html"><a href="tipovi.html"><i class="fa fa-check"></i><b>2</b> Osnovni tipovi podataka i operatori</a><ul>
+<li class="chapter" data-level="2.1" data-path="tipovi.html"><a href="tipovi.html#osnovni-tipovi-podataka"><i class="fa fa-check"></i><b>2.1</b> Osnovni tipovi podataka</a></li>
+<li class="chapter" data-level="2.2" data-path="tipovi.html"><a href="tipovi.html#operatori"><i class="fa fa-check"></i><b>2.2</b> Operatori</a></li>
+<li class="chapter" data-level="2.3" data-path="tipovi.html"><a href="tipovi.html#nedostajuce-nepoznate-i-nemoguce-vrijednosti"><i class="fa fa-check"></i><b>2.3</b> Nedostajuće, nepoznate i nemoguće vrijednosti</a></li>
+<li class="chapter" data-level="" data-path="tipovi.html"><a href="tipovi.html#zadaci-za-vjezbu"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vektori.html"><a href="vektori.html"><i class="fa fa-check"></i><b>3</b> Vektori, matrice i liste</a><ul>
+<li class="chapter" data-level="3.1" data-path="vektori.html"><a href="vektori.html#vektori"><i class="fa fa-check"></i><b>3.1</b> Vektori</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="vektori.html"><a href="vektori.html#stvaranje-vektora"><i class="fa fa-check"></i><b>3.1.1</b> Stvaranje vektora</a></li>
+<li class="chapter" data-level="3.1.2" data-path="vektori.html"><a href="vektori.html#operator"><i class="fa fa-check"></i><b>3.1.2</b> Operator <code>[</code></a></li>
+<li class="chapter" data-level="3.1.3" data-path="vektori.html"><a href="vektori.html#principi-vektorizacije-i-recikliranja"><i class="fa fa-check"></i><b>3.1.3</b> Principi vektorizacije i recikliranja</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="vektori.html"><a href="vektori.html#indeksni-vektori"><i class="fa fa-check"></i><b>3.2</b> Indeksni vektori</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="vektori.html"><a href="vektori.html#lokacijsko-indeksiranje"><i class="fa fa-check"></i><b>3.2.1</b> Lokacijsko indeksiranje</a></li>
+<li class="chapter" data-level="3.2.2" data-path="vektori.html"><a href="vektori.html#uvjetno-indeksiranje"><i class="fa fa-check"></i><b>3.2.2</b> Uvjetno indeksiranje</a></li>
+<li class="chapter" data-level="3.2.3" data-path="vektori.html"><a href="vektori.html#imensko-indeksiranje"><i class="fa fa-check"></i><b>3.2.3</b> Imensko indeksiranje</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="vektori.html"><a href="vektori.html#matrice-i-polja"><i class="fa fa-check"></i><b>3.3</b> Matrice i polja</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="vektori.html"><a href="vektori.html#rezanje-matrica"><i class="fa fa-check"></i><b>3.3.1</b> Rezanje matrica</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="vektori.html"><a href="vektori.html#liste"><i class="fa fa-check"></i><b>3.4</b> Liste</a></li>
+<li class="chapter" data-level="" data-path="vektori.html"><a href="vektori.html#zadaci-za-vjezbu-1"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="okviri.html"><a href="okviri.html"><i class="fa fa-check"></i><b>4</b> Podatkovni okviri i faktori</a><ul>
+<li class="chapter" data-level="4.1" data-path="okviri.html"><a href="okviri.html#podatkovni-okviri"><i class="fa fa-check"></i><b>4.1</b> Podatkovni okviri</a></li>
+<li class="chapter" data-level="4.2" data-path="okviri.html"><a href="okviri.html#odabir-redaka-i-stupaca-podatkovnih-okvira"><i class="fa fa-check"></i><b>4.2</b> Odabir redaka i stupaca podatkovnih okvira</a></li>
+<li class="chapter" data-level="4.3" data-path="okviri.html"><a href="okviri.html#dodavanje-i-brisanje-redaka-i-stupaca"><i class="fa fa-check"></i><b>4.3</b> Dodavanje i brisanje redaka i stupaca</a></li>
+<li class="chapter" data-level="4.4" data-path="okviri.html"><a href="okviri.html#faktori"><i class="fa fa-check"></i><b>4.4</b> Faktori</a></li>
+<li class="chapter" data-level="" data-path="okviri.html"><a href="okviri.html#zadaci-za-vjezbu-2"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="kontrola.html"><a href="kontrola.html"><i class="fa fa-check"></i><b>5</b> Kontrola toka i objekti</a><ul>
+<li class="chapter" data-level="5.1" data-path="kontrola.html"><a href="kontrola.html#naredbe-kontrole-toka"><i class="fa fa-check"></i><b>5.1</b> Naredbe kontrole toka</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="kontrola.html"><a href="kontrola.html#uvjetno-izvoenje-naredbi"><i class="fa fa-check"></i><b>5.1.1</b> Uvjetno izvođenje naredbi</a></li>
+<li class="chapter" data-level="5.1.2" data-path="kontrola.html"><a href="kontrola.html#programske-petlje"><i class="fa fa-check"></i><b>5.1.2</b> Programske petlje</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="kontrola.html"><a href="kontrola.html#objekti-u-r-u"><i class="fa fa-check"></i><b>5.2</b> Objekti u R-u</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="kontrola.html"><a href="kontrola.html#s3-objekti"><i class="fa fa-check"></i><b>5.2.1</b> S3 objekti</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="kontrola.html"><a href="kontrola.html#zadaci-za-vjezbu-3"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="paketi.html"><a href="paketi.html"><i class="fa fa-check"></i><b>6</b> Paketi, ugrađene funkcije i okoline</a><ul>
+<li class="chapter" data-level="6.1" data-path="paketi.html"><a href="paketi.html#rad-s-paketima"><i class="fa fa-check"></i><b>6.1</b> Rad s paketima</a></li>
+<li class="chapter" data-level="6.2" data-path="paketi.html"><a href="paketi.html#ugraene-funkcije"><i class="fa fa-check"></i><b>6.2</b> Ugrađene funkcije</a></li>
+<li class="chapter" data-level="6.3" data-path="paketi.html"><a href="paketi.html#okoline"><i class="fa fa-check"></i><b>6.3</b> Okoline</a></li>
+<li class="chapter" data-level="" data-path="paketi.html"><a href="paketi.html#zadaci-za-vjezbu-4"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="korisnik.html"><a href="korisnik.html"><i class="fa fa-check"></i><b>7</b> Korisnički definirane funkcije</a><ul>
+<li class="chapter" data-level="7.1" data-path="korisnik.html"><a href="korisnik.html#kako-definirati-funkciju"><i class="fa fa-check"></i><b>7.1</b> Kako definirati funkciju</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="korisnik.html"><a href="korisnik.html#princip-kopiranja-kod-izmjene-copy-on-modify"><i class="fa fa-check"></i><b>7.1.1</b> Princip “kopiranja kod izmjene” (copy-on-modify)</a></li>
+<li class="chapter" data-level="7.1.2" data-path="korisnik.html"><a href="korisnik.html#funkcija-kao-objekt"><i class="fa fa-check"></i><b>7.1.2</b> Funkcija kao objekt</a></li>
+<li class="chapter" data-level="7.1.3" data-path="korisnik.html"><a href="korisnik.html#genericke-funkcije"><i class="fa fa-check"></i><b>7.1.3</b> Generičke funkcije</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="korisnik.html"><a href="korisnik.html#zadaci-za-vjezbu-5"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html"><i class="fa fa-check"></i><b>8</b> Porodica funkcija <code id="apply">apply</code></a><ul>
+<li class="chapter" data-level="8.1" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#sto-su-apply-funkcije"><i class="fa fa-check"></i><b>8.1</b> Što su <code>apply</code> funkcije?</a></li>
+<li class="chapter" data-level="8.2" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#funkcija-apply"><i class="fa fa-check"></i><b>8.2</b> Funkcija <code>apply</code></a></li>
+<li class="chapter" data-level="8.3" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#funkcije-lapply-sapply-i-vapply"><i class="fa fa-check"></i><b>8.3</b> Funkcije <code>lapply</code>, <code>sapply</code> i <code>vapply</code></a></li>
+<li class="chapter" data-level="8.4" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#ostale-funkcije-iz-porodice-apply-i-dostupne-alternative"><i class="fa fa-check"></i><b>8.4</b> Ostale funkcije iz porodice <code>apply</code> i dostupne alternative</a></li>
+<li class="chapter" data-level="" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#zadaci-za-vjezbu-6"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="part"><span><b>II Upravljanje podacima i vizualizacije</b></span></li>
+<li class="chapter" data-level="9" data-path="cijev.html"><a href="cijev.html"><i class="fa fa-check"></i><b>9</b> Operator cjevovoda i uredni podaci</a><ul>
+<li class="chapter" data-level="9.1" data-path="cijev.html"><a href="cijev.html#operator-cjevovoda"><i class="fa fa-check"></i><b>9.1</b> Operator cjevovoda</a></li>
+<li class="chapter" data-level="9.2" data-path="cijev.html"><a href="cijev.html#uredni-podaci"><i class="fa fa-check"></i><b>9.2</b> Uredni podaci</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="cijev.html"><a href="cijev.html#funkcije-gather-i-spread"><i class="fa fa-check"></i><b>9.2.1</b> Funkcije <code>gather</code> i <code>spread</code></a></li>
+<li class="chapter" data-level="9.2.2" data-path="cijev.html"><a href="cijev.html#funkcije-separate-i-unite"><i class="fa fa-check"></i><b>9.2.2</b> Funkcije <code>separate</code> i <code>unite</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="cijev.html"><a href="cijev.html#zadaci-za-vjezbu-7"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="datumi.html"><a href="datumi.html"><i class="fa fa-check"></i><b>10</b> Rad sa datumima i znakovnim nizovima</a><ul>
+<li class="chapter" data-level="10.1" data-path="datumi.html"><a href="datumi.html#rad-sa-datumima"><i class="fa fa-check"></i><b>10.1</b> Rad sa datumima</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="datumi.html"><a href="datumi.html#klasa-date"><i class="fa fa-check"></i><b>10.1.1</b> Klasa <code>Date</code></a></li>
+<li class="chapter" data-level="10.1.2" data-path="datumi.html"><a href="datumi.html#klase-posixct-i-posixlt"><i class="fa fa-check"></i><b>10.1.2</b> Klase <code>POSIXct</code> i <code>POSIXlt</code></a></li>
+<li class="chapter" data-level="10.1.3" data-path="datumi.html"><a href="datumi.html#paket-lubridate"><i class="fa fa-check"></i><b>10.1.3</b> Paket <code>lubridate</code></a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="datumi.html"><a href="datumi.html#rad-sa-znakovnim-nizovima"><i class="fa fa-check"></i><b>10.2</b> Rad sa znakovnim nizovima</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="datumi.html"><a href="datumi.html#analiza-teksta-i-regularni-izrazi"><i class="fa fa-check"></i><b>10.2.1</b> Analiza teksta i regularni izrazi</a></li>
+<li class="chapter" data-level="10.2.2" data-path="datumi.html"><a href="datumi.html#paket-stringr"><i class="fa fa-check"></i><b>10.2.2</b> Paket <code>stringr</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datumi.html"><a href="datumi.html#zadaci-za-vjezbu-8"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><i class="fa fa-check"></i><b>11</b> Prilagodba podatkovnih skupova uz paket <code>dplyr</code></a><ul>
+<li class="chapter" data-level="11.1" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#ogledni-podatkovni-skup-titanic"><i class="fa fa-check"></i><b>11.1</b> Ogledni podatkovni skup: <em>Titanic</em></a></li>
+<li class="chapter" data-level="11.2" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#stvaranje-podskupa-obzervacija-uz-filter-i-slice"><i class="fa fa-check"></i><b>11.2</b> Stvaranje podskupa obzervacija uz <code>filter</code> i <code>slice</code></a></li>
+<li class="chapter" data-level="11.3" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#stvaranje-podskupa-varijabli-uz-select"><i class="fa fa-check"></i><b>11.3</b> Stvaranje podskupa varijabli uz <code>select</code></a></li>
+<li class="chapter" data-level="11.4" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#stvaranje-novih-stupaca-uz-mutate"><i class="fa fa-check"></i><b>11.4</b> Stvaranje novih stupaca uz <code>mutate</code></a></li>
+<li class="chapter" data-level="11.5" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#ogledni-podatkovni-skup-houston-flights"><i class="fa fa-check"></i><b>11.5</b> Ogledni podatkovni skup: <em>Houston flights</em></a></li>
+<li class="chapter" data-level="11.6" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#grupiranje-i-agregacija-uz-group_by-i-summarise"><i class="fa fa-check"></i><b>11.6</b> Grupiranje i agregacija uz <code>group_by</code> i <code>summarise</code></a></li>
+<li class="chapter" data-level="11.7" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#spajanje-podatkovnih-okvira-uz-join-funkcije"><i class="fa fa-check"></i><b>11.7</b> Spajanje podatkovnih okvira uz join funkcije</a></li>
+<li class="chapter" data-level="11.8" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#integracija-sa-relacijskim-bazama-podataka"><i class="fa fa-check"></i><b>11.8</b> Integracija sa relacijskim bazama podataka</a></li>
+<li class="chapter" data-level="" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#zadaci-za-vjezbu-9"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html"><i class="fa fa-check"></i><b>12</b> Vizualizacija podataka uz paket <code id="ggplot2">ggplot2</code></a><ul>
+<li class="chapter" data-level="12.1" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#eksploratorna-analiza-podataka"><i class="fa fa-check"></i><b>12.1</b> Eksploratorna analiza podataka</a></li>
+<li class="chapter" data-level="12.2" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#vizualizacija-podataka-uz-pomoc-jezika-r"><i class="fa fa-check"></i><b>12.2</b> Vizualizacija podataka uz pomoć jezika R</a></li>
+<li class="chapter" data-level="12.3" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#graficka-gramatika-i-paket-ggplot2"><i class="fa fa-check"></i><b>12.3</b> Grafička gramatika i paket <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="12.3.1" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#aspekti-podataka-estetike-i-geometrije"><i class="fa fa-check"></i><b>12.3.1</b> Aspekti podataka, estetike i geometrije</a></li>
+<li class="chapter" data-level="12.3.2" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#fiksni-parametri-geometrije"><i class="fa fa-check"></i><b>12.3.2</b> Fiksni parametri geometrije</a></li>
+<li class="chapter" data-level="12.3.3" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#aspekti-statistike-i-pozicije"><i class="fa fa-check"></i><b>12.3.3</b> Aspekti statistike i pozicije</a></li>
+<li class="chapter" data-level="12.3.4" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#povezanost-geometrije-i-statistike"><i class="fa fa-check"></i><b>12.3.4</b> Povezanost geometrije i statistike</a></li>
+<li class="chapter" data-level="12.3.5" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#aspekti-skale-koordinatnog-sustava-i-teme"><i class="fa fa-check"></i><b>12.3.5</b> Aspekti skale, koordinatnog sustava i teme</a></li>
+<li class="chapter" data-level="12.3.6" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#uvjetni-facetirani-grafovi"><i class="fa fa-check"></i><b>12.3.6</b> Uvjetni (facetirani) grafovi</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#grafovi-u-eksploratornoj-analizi-i-izvjestavanju"><i class="fa fa-check"></i><b>12.4</b> Grafovi u eksploratornoj analizi i izvještavanju</a></li>
+<li class="chapter" data-level="" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#zadaci-za-vjezbu-10"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="part"><span><b>III Statistika i strojno učenje u jeziku R</b></span></li>
+<li class="chapter" data-level="13" data-path="razdiobe.html"><a href="razdiobe.html"><i class="fa fa-check"></i><b>13</b> Statističko programiranje, razdiobe i simulacije</a><ul>
+<li class="chapter" data-level="13.1" data-path="razdiobe.html"><a href="razdiobe.html#rad-sa-razdiobama-vjerojatnosti-u-jeziku-r"><i class="fa fa-check"></i><b>13.1</b> Rad sa razdiobama vjerojatnosti u jeziku R</a></li>
+<li class="chapter" data-level="13.2" data-path="razdiobe.html"><a href="razdiobe.html#simulacije"><i class="fa fa-check"></i><b>13.2</b> Simulacije</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="deskriptivna.html"><a href="deskriptivna.html"><i class="fa fa-check"></i><b>14</b> Deskriptivna i inferencijalna statistika u jeziku R</a><ul>
+<li class="chapter" data-level="14.1" data-path="deskriptivna.html"><a href="deskriptivna.html#deskriptivna-statistika"><i class="fa fa-check"></i><b>14.1</b> Deskriptivna statistika</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="deskriptivna.html"><a href="deskriptivna.html#univarijantna-deskriptivna-statistika"><i class="fa fa-check"></i><b>14.1.1</b> Univarijantna deskriptivna statistika</a></li>
+<li class="chapter" data-level="14.1.2" data-path="deskriptivna.html"><a href="deskriptivna.html#bivarijantna-i-multivarijantna-deskriptivna-statistika"><i class="fa fa-check"></i><b>14.1.2</b> Bivarijantna i multivarijantna deskriptivna statistika</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="deskriptivna.html"><a href="deskriptivna.html#inferencijalna-statistika"><i class="fa fa-check"></i><b>14.2</b> Inferencijalna statistika</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="deskriptivna.html"><a href="deskriptivna.html#testiranje-hipoteza"><i class="fa fa-check"></i><b>14.2.1</b> Testiranje hipoteza</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="regresija.html"><a href="regresija.html"><i class="fa fa-check"></i><b>15</b> Odabrane metode strojnog učenja: regresijska analiza</a><ul>
+<li class="chapter" data-level="15.1" data-path="regresija.html"><a href="regresija.html#strojno-ucenje-i-prediktivna-analiza"><i class="fa fa-check"></i><b>15.1</b> Strojno učenje i prediktivna analiza</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="regresija.html"><a href="regresija.html#stvaranje-prediktivnog-modela"><i class="fa fa-check"></i><b>15.1.1</b> Stvaranje prediktivnog modela</a></li>
+<li class="chapter" data-level="15.1.2" data-path="regresija.html"><a href="regresija.html#jednostavna-linearna-regresija"><i class="fa fa-check"></i><b>15.1.2</b> Jednostavna linearna regresija</a></li>
+<li class="chapter" data-level="15.1.3" data-path="regresija.html"><a href="regresija.html#funkcija-lm"><i class="fa fa-check"></i><b>15.1.3</b> Funkcija <code>lm</code></a></li>
+<li class="chapter" data-level="15.1.4" data-path="regresija.html"><a href="regresija.html#linearna-regresija-i-kategorijske-varijable"><i class="fa fa-check"></i><b>15.1.4</b> Linearna regresija i kategorijske varijable</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="regresija.html"><a href="regresija.html#visestruka-multipla-linearna-regresija"><i class="fa fa-check"></i><b>15.2</b> Višestruka (multipla) linearna regresija</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Programirajmo u R-u - old</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="razdiobe" class="section level1">
+<h1><span class="header-section-number">13</span> Statističko programiranje, razdiobe i simulacije</h1>
+<p>R se između ostalog definira kao jezik za “statističko programiranje” što znači da je jedna od njegovih osnovnih funkcija omogućiti provođenje statističkih analiza. Za razliku od drugih programskih jezika, za R se često kaže da je stvoren “od statističara, za statističare”, što znači da usprkos činjenici da je R kao jezik uvelike napredovao i evoluirao od svojih početaka kao izvedenice jezika S, statistika je i dalje u srži samog jezika a R kao takav sadrži iznimno bogatu podršku orijentiranu upravo statističarima i njihovim potrebama.</p>
+<p>Cilj lekcije koja slijedi nije naučiti čitatelja statistiku. Budući da se radi o kompleksnom i relativno zahtjevnom znanstvenom polju za bilo kakav svrsishodan pregled trebalo bi daleko više prostora od onoga koji imamo ovdje na raspolaganju. Ideja lekcije jest primarno prikazati funkcije rada sa razdiobama, objasniti osnove provedbe simulacija te objasniti neke osnovne metode deskriptivne i inferencijalne statistike uz naglasak na njihovo provođenje kroz programski jezik R. Čitatelji koji nisu upoznati sa statistikom mogu lekciju koristiti kao prvi korak prema upoznavanju svijeta statistike, dok oni koji upravljaju znanjem barem osnovnih statističkih metoda mogu saznati kako neke poslove (koje su možda obavljali uz pomoć nekih drugih alata) mogu izvršavati programski uz pomoć podrške koju nudi jezik R.</p>
+<p>Kao puno opsežniji uvod u statistiku snažno preporučujemo knjigu “OpenIntro Statistics” <span class="citation">(Diez, Barr, and Çetinkaya-Rundel <a href="#ref-diez2015openintro">2015</a>)</span>. Važno je napomenuti da knjiga ima i svoj prateći CRAN paket, zvan ‘openintro’, koji omogućuje paralelno čitanje knjige i rješavanje zadanih problema direktno u R-u na istim podatkovnim skupovima koji se referenciraju u knjizi.</p>
+<hr />
+<div id="rad-sa-razdiobama-vjerojatnosti-u-jeziku-r" class="section level2">
+<h2><span class="header-section-number">13.1</span> Rad sa razdiobama vjerojatnosti u jeziku R</h2>
+<p>U ovom dijelu lekcije prikazat ćemo podršku jezika R za rad sa različitim razdiobama vjerojatnosti. Važno je naglasiti da se ovdje nećemo baviti temeljitim pregledom teorije vezanim uz pojmove razdiobe vjerojatnosti diskretne i kontinuirane slučajne varijable (već spomenuti izvor <a href = "https://www.openintro.org/stat/textbook.php?stat_book=os">“OpenIntro Statistics”</a> može pružiti vrlo kvalitetan uvod ove tematike). Cilj lekcije koja slijedi primarno je prikazati što jezik R - ili konkretnije paket <code>stats</code> - nudi kao podršku za lak i učinkovit rad sa razdiobama.</p>
+<p>Pojam <em>razdiobe vjerojatnosti</em> predstavlja funkciju koja opisuje vjerojatnost pojave nekog slučajnog događaja. Tako kod bacanja novčića imamo dva moguća ishoda - “pismo” ili “glava”, a ako je novčić regularan vjerojatnost pojedinog ishoda jest 0.5, tj. 50%. Zbroj brojeva kod bacanja dvije kockice može biti od 2 do 12, pri čemu svi ishodi nemaju istu vjerojatnost; npr. broj 7 ima najveću vjerojatnost (17%) dok 2 i 12 imaju najmanju (samo 3%).</p>
+<p>Možemo razlikovati <em>diskretne</em> i <em>kontinuirane</em> razdiobe vjerojatnosti. Najveća razlika među njima jest ta što kod kontinuiranih razdiobi slučajna varijabla koju opisuju teoretski može poprimiti jednu od beskonačnog broja mogućih vrijednosti tako da ne možemo pričati o vjerojatnosti konkretnog ishoda; zbog toga kod kontinuiranih razdioba pričamo o vjerojatnosti da varijabla bude <em>manja ili jednaka</em> nekoj vrijednosti.</p>
+<p>Postoji veliki broj razdioba vjerojatnosti koje nam mogu poslužiti u različitim scenarijima. <em>Binomna razdioba</em> opisuje vjerojatnost uočavanja nekog događaja u eksperimentu kojeg ponavljamo određeni broj puta (npr. vjerojatnost da u 10 bacanja novčića dobijemo pismo 8 puta). <em>Geometrijska razdioba</em> opisuje vjerojatnost broja ponavljanja nekog eksperimenta dok ne dočekamo neki ishod ishoda (npr. vjerojatnost da se prvo “pismo” pojavi tek u petom bacanju novčića). Konačno, možda najpoznatija razdioba je <em>Gaussova</em> ili <em>normalna razdioba</em> koja se često pojavljuje u prirodi i koju statističari vrlo često koriste za potrebe inferencijalne statistike.</p>
+<p>Poznavanje funkcija za rad sa različitim razdiobama može nam uvelike pomoći u različitim scenarijima. Na sreću, ne moramo poznavati veliki broj razdiobi niti u detalje učiti matematičku podlogu svake od njih. Dovoljno je početi sa nekoliko osnovnih razdiobi (npr. normalna i uniformna) a potom polako širiti znanje o ostalim razdiobama kada se suočimo sa problemima gdje se one mogu pokazati korisnima. Jezik R nam ovdje prilično pomaže budući da koristi jedinstven predložak za podršku svim funkcijama razdiobe koje imamo na raspolaganju tako da kad naučimo upravljati podrškom za jednu razdiobu imamo kvalitetnu podlogu za korištenje bilo koje druge razdiobe, jednom kad se upoznamo s njenim specifičnostima i scenarijima uporabe.</p>
+<p>Broj razdiobi koje imaju ugrađenu podršku u jeziku R je prilično velik. Popis razdiobi koje imamo na raspolaganju - ne računajući dodatne CRAN pakete! - možemo dobiti naredbom:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">help</span>(Distributions)</code></pre></div>
+<hr />
+<p>U pravilu za svaku raspodjelu imamo na raspolaganju četiri funkcije koje prate isti uzorak imenovanja - funkcije slijede naziv distribucije (npr. <code>norm</code> za normalnu razdiobu, <code>unif</code> za uniformnu, <code>binom</code> za binomnu i sl.). Ovom nazivu daje se prefiks od jednog slova kako slijedi:</p>
+<ul>
+<li><code>d</code> - za funkciju gustoće razdiobe</li>
+<li><code>p</code> - za funkciju razdiobe (kumulativna funkcija)</li>
+<li><code>q</code> - za funkciju kvantila (inverz od funkcije razdiobe)</li>
+<li><code>r</code> - za nasumično generiranje jedne ili više varijabli iz odabrane razdiobe</li>
+</ul>
+<p>Svaka od ovih funkcija prima parametre specifične za njenu funkcionalnost (tako funkcija za nasumični odabir varijabli iz razdiobe prima parametar <code>n</code> koji joj daje informaciju broju slučajnih varijabli koje želimo generirati) te parametre specifične za tu razdiobu (tako sve funkcije za normalnu razdiobu primaju aritmetičku sredinu i standardnu devijaciju tj. parametre <code>mean</code> i <code>sd</code>, geometrijska razdioba traži vektor vjerojatnosti <code>prob</code>, a Poissonova parametar <code>lambda</code>).</p>
+<p>U nastavku ćemo se (uglavnom) usredotočiti na normalnu (Gaussovu) razdiobu, budući da se radi o poznatoj, sveprisutnoj razdiobi s koju ćemo i najčešće susretati u praksi. No bitno je napomenuti da će većina stvari prikazanih na normalnoj razdiobi biti primjenjiva i na druge razdiobe, obzirom na činjenicu da su pripadajuće <em>R</em>-ove funkcije za rad sa razdiobama dizajnirane prema istom, gore prikazanom predlošku. Za normalnu razdiobu tako imamo funkcije <code>dnorm</code>, <code>pnorm</code>, <code>qnorm</code> i <code>rnorm</code>. Potonju smo već upoznali u primjerima u kojima smo generirali vektor slučajnih vrijednosti iz normalne razdiobe. Pogledajmo u nastavku kako nam i preostale tri mogu poslužiti u praksi.</p>
+<p>Već smo rekli da funkcije normalne razdiobe primaju parametre <code>mean</code> i <code>sd</code> kojima definiramo aritmetičku sredinu i standardnu devijaciju normalne razdiobe s kojom želimo raditi. Ukoliko te parametre ne navedemo pretpostaviti će se razdioba sa sredinom <code>0</code> i devijacijom <code>1</code>.</p>
+<hr />
+<p>Počnimo sa funkcijom <code>pnorm</code> zbog njene relativno lake interpretacije. Ako pretpostavimo neku normalnu razdiobu i neku proizvoljno odabranu vrijednost <code>x</code>, funkcija <code>pnorm</code> odgovara na pitanje “Kolika je vjerojatnost da slučajno odabrani broj iz odabrane normalne razdiobe bude manji (ili jednak) od <code>x</code>”? Podsjetimo se da kod razdioba kontinuiranih varijabli nikad ne možemo samo postaviti pitanje o vjerojatnosti pripadanja broja nekom intervalu, budući da zbog prirode kontinuiranih brojeva mogućih opcija ima beskonačno tako da je vjerojatnost pojave točno odabranog broja infinitezimalno mala.</p>
+<hr />
+<p><strong>Zadatak 13.1 - funkcija ‘pnorm’</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pretpostavimo normalnu razdiobu sa sredinom 50 i std. devijacijom 10</span>
+<span class="co"># kolika je vjerojatnost da slučajno odabrani broj iz ove razdiobe </span>
+<span class="co"># bude manji ili jednak 10, 25, 50, 75 ili 100?</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="dv">100</span>)
+<span class="kw">pnorm</span>(x, <span class="dt">mean =</span> <span class="dv">50</span>, <span class="dt">sd =</span> <span class="dv">10</span>) %&gt;%<span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 0.00 0.01 0.50 0.99 1.00</code></pre>
+</div>
+<hr />
+<p>Ukoliko želimo vjerojatnost da je slučajni broj <em>veći</em> od zadanog broja, možemo postaviti parametar <code>lower.tail = FALSE</code>.</p>
+<p>Funkciju <code>pnorm</code> možemo koristiti i za vizualizaciju funkcije razdiobe korištenjem već poznatih metoda iz paketa <code>ggplot2</code> (samo moramo prvo prirediti odgovarajući podatkovni okvir, budući da funkcije tog paketa očekuju da podaci dolaze upravo u takvoj podatkovnoj strukturi).</p>
+<hr />
+<p><strong>Zadatak 13.2 - vizualizacija funkcije razdiobe</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="fl">0.5</span>)
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> <span class="kw">pnorm</span>(x, <span class="dt">mean =</span> <span class="dv">50</span>, <span class="dt">sd =</span> <span class="dv">10</span>))
+
+<span class="co"># nacrtajte točkasti graf podatkovnog okvira `df`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x, y)) +<span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-453-1.png" width="672" /></p>
+</div>
+<hr />
+<p>Funkcija <code>qnorm</code> predstavlja inverz funkcije <code>pnorm</code> tj. za zadanu vjerojatnost i neku normalnu razdiobu funkcija vraća vrijednost koja se nalazi “na granici” te vjerojatnosti. To znači da prosljeđivanjem nekog proizvoljnog postotka funkciji možemo dobiti točno određenu vrijednost koja se nalazi na tako odabranom “percentilu”.</p>
+<hr />
+<p><strong>Zadatak 13.3 - funkcija ‘qnorm’</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ako pretpostavimo normalnu razdiobu sa sredinom 500 i std. devijacijom 20</span>
+<span class="co"># koja se vrijednost nalazi na 1., 25., 50., 75. i 99.-om percentilu?</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.75</span>, <span class="fl">0.99</span>)
+<span class="kw">qnorm</span>(x, <span class="dv">500</span>, <span class="dv">20</span>)</code></pre></div>
+<pre><code>## [1] 453.4730 486.5102 500.0000 513.4898 546.5270</code></pre>
+</div>
+<hr />
+<p>Funkcija <code>dnorm</code> nam za odabranu vrijednost <code>x</code> i neku normalnu razdiobu vraća iznos funkcije gustoće razdiobe. Ona se iznimno često koristi za vizualizaciju neke razdiobe.</p>
+<hr />
+<p><strong>Zadatak 13.4 - funkcija ‘dnorm’</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># n istom grafu prikažite funkcije gustoće razdiobe sa sljedećim parametrima</span>
+<span class="co">#   - sredina: 50, st.dev: 5   (plava linija)</span>
+<span class="co">#   - sredina: 50, st.dev: 20  (crvena linija)</span>
+<span class="co">#   - sredina: 70, st.dev: 5   (zelena linija)</span>
+<span class="co">#</span>
+<span class="co"># NAPUTAK: koristite se vektorom `x` iz zadatka 5.1.2. kako bi napravili podatkovni okvir u kojem</span>
+<span class="co">#          će stupci imati pripadajuće vrijenosti funkcija gustoća razdiobi</span>
+<span class="co">#          potom grafu dodajte linijske geometrije u kojoj svaka koristi vlastitu estetiku `y`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="fl">0.5</span>)
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> x, <span class="dt">y1 =</span> <span class="kw">dnorm</span>(x, <span class="dv">50</span>, <span class="dv">5</span>), <span class="dt">y2 =</span> <span class="kw">dnorm</span>(x, <span class="dv">50</span>, <span class="dv">20</span>), <span class="dt">y3 =</span> <span class="kw">dnorm</span>(x, <span class="dv">70</span>, <span class="dv">5</span>))
+
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">x =</span> x)) +<span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> y1), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) +
+<span class="st">        </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> y2), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) +<span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> y3), <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>) </code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-457-1.png" width="672" /></p>
+</div>
+<hr />
+<p>Kada radimo sa realnim podacima kontinuiranog tipa, često želimo provjeriti odgovaraju li oni nekoj normalnoj razdiobi. Jedan od načina kako ovo izvesti jest uz pomoć histograma koje smo već spominjali u poglavlju o vizualizaciji te kojima ćemo se vratiti u poglavlju o deskriptivnoj statistici. Drugi način jest koristiti funkciju <code>geom_density</code> paketa <code>ggplot2</code> koja će uz pomoć posebnog algoritma pokušati “pogoditi” funkciju razdiobe te ju vizualizirati na grafu.</p>
+<p>Prikažimo kako uz pomoć spomenute funkcije vizualno provjeriti da li se skup vrijednosti nekih obzervacija ravna po nekoj normalnoj razdiobi.</p>
+<hr />
+<p>Za iduće primjere generiramo po 1000 obzervacija:</p>
+<ul>
+<li>nasumično iz normalne razdiobe</li>
+<li>nasumično iz lijevo i desno nagnute razdiobe</li>
+<li>iz bimodalne razdiobe (razdiobe sa dva “vrha”)</li>
+</ul>
+<p>Lijevo i desno nagnute razdiobe su razdiobe sa “dugim repovima” (orijentacija repa definira “nagnutost”, tj. “lijevo nagnuta” ima rep na lijevoj strani). Ove razdiobe stvoriti ćemo uz pomoć funkcije <code>rsn</code> paketa <code>sn</code> kojeg ovdje nećemo posebno objašnjavati (znatiželjni čitatelji detalje oko ovog paketa i spomenute funkcije mogu potražiti u dokumentaciji). Bimodalnu razdiobu stvorili smo jednostavnim kombiniranjem slučajnih vrijednosti iz dvije različite normalne razdiobe.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#library(sn)    # ukoliko je potrebno</span>
+<span class="kw">set.seed</span>(<span class="dv">123</span>)
+podaci_normal &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dv">170</span>, <span class="dv">3</span>)
+podaci_lijevo&lt;-<span class="st"> </span><span class="kw">rsn</span>(<span class="dv">1000</span>, <span class="dv">175</span>, -<span class="dv">1</span>, <span class="dv">15</span>)
+podaci_desno &lt;-<span class="st"> </span><span class="kw">rsn</span>(<span class="dv">1000</span>, <span class="dv">163</span>, <span class="dv">2</span>, <span class="dv">10</span>)
+podaci_bimodal &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dv">700</span>, <span class="dv">170</span>, <span class="dv">5</span>), <span class="kw">rnorm</span>(<span class="dv">300</span>, <span class="dv">120</span>, <span class="dv">10</span>))
+
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">1000</span>, <span class="dt">normal =</span> podaci_normal, <span class="dt">lijevo =</span> podaci_lijevo, 
+                 <span class="dt">desno =</span> podaci_desno, <span class="dt">bimodal =</span> podaci_bimodal )</code></pre></div>
+<hr />
+<p>Uz pomoć već spomenute funkcije <code>geom_density</code> možemo vizualizirati funkcije gustoće razdiobe vjerojatnosti naših nasumično odabranih varijabli. Grafove ćemo zbog lakše usporedbe složiti u matricu 2 x 2 uz pomoć funkcije <code>grid.arrange</code> iz paketa <code>gridExtras</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(normal)) +<span class="st"> </span><span class="kw">geom_density</span>() +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Normalna&quot;</span>) +<span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">160</span>, <span class="dv">180</span>))
+g2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(lijevo)) +<span class="st"> </span><span class="kw">geom_density</span>() +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Lijevo nagnuta&quot;</span>) +<span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">170</span>, <span class="dv">176</span>))
+g3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(desno)) +<span class="st"> </span><span class="kw">geom_density</span>() +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Desno nagnuta&quot;</span>) +<span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">160</span>, <span class="dv">170</span>))
+g4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(bimodal)) +<span class="st"> </span><span class="kw">geom_density</span>() +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Bimodalna&quot;</span>) +<span class="st"> </span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="dv">90</span>, <span class="dv">190</span>))
+
+<span class="kw">grid.arrange</span>(g1, g2, g3, g4, <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-459-1.png" width="672" /></p>
+<hr />
+<p>Za provjeru “normalnosti” često se koristi i tzv. “QQ graf” (od engl. <em>quantile-quantile</em>). Ovaj graf radi na sljedeći način: obzervacije se poredaju na jednu os prema svojoj vrijednosti dok na drugu os stavljamo njihovu očekivanu Z-vrijednost (engl. <em>Z-score</em>) koji predstavlja “udaljenost od sredine po broju standardnih devijacija”). Kod normalne razdiobe QQ graf leži na dijagonali grafa, dok se odstupanje od normalne razdiobe očituje u “izvijenosti” grafa tj. odstupanju od “pravca normalnosti”</p>
+<p>Pogledajmo kako izgledaju QQ-grafovi naših razdiobi (koristimo <code>ggplot</code> i funkciju geometrije <code>geom_qq</code>):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#library(gridExtras)    # ukoliko je potrebno</span>
+g1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">sample =</span> normal)) +<span class="st"> </span><span class="kw">geom_qq</span>() +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Normalna&quot;</span>)
+g2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">sample =</span> lijevo)) +<span class="st"> </span><span class="kw">geom_qq</span>() +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Lijevo nagnuta&quot;</span>)
+g3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">sample =</span> desno)) +<span class="st"> </span><span class="kw">geom_qq</span>() +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Desno nagnuta&quot;</span>)
+g4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(df, <span class="kw">aes</span>(<span class="dt">sample =</span> bimodal)) +<span class="st"> </span><span class="kw">geom_qq</span>() +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Bimodalna&quot;</span>)
+
+<span class="kw">grid.arrange</span>(g1, g2, g3, g4, <span class="dt">nrow =</span> <span class="dv">2</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-460-1.png" width="672" /></p>
+<hr />
+<p>Ovdje završavamo priču o razdiobama. Ponovimo da prikazane funkcije imaju svoje korespondentne alternative za niz drugih razdiobi, pa tako npr. Poissonova razdioba ima funkcije <code>dpois</code>, <code>ppois</code>, <code>qpois</code> i <code>rpois</code> s kojima radimo vrlo slično prikazanim metodama normalne razdiobe, vodeći naravno računa o specifičnostima odabrane razdiobe (kao što smo već rekli, Poissonova razdioba očekivano nema parametre <code>mean</code> i <code>sd</code> već samo parametar <code>lambda</code>).</p>
+<hr />
+</div>
+<div id="simulacije" class="section level2">
+<h2><span class="header-section-number">13.2</span> Simulacije</h2>
+<p>Jezik <em>R</em> vrlo je pogodan za stvaranje raznovrsnih simulacija. Osnovni mehanizmi provođenja simulacija su funkcija <code>sample</code> te porodica funkcija razdiobi spomenuta u prethodnom poglavlju, točnije funkcije iz navedene porodice sa prefiksom <code>r</code> koje omogućuju nasumični odabir iz zadane razdiobe.</p>
+<p>Funkciju <code>sample</code> smo već upoznali budući da se radi o vrlo praktičnoj funkciji za scenarije koji zahtijevaju slučajni odabir elemenata nekog vektora. Puni potpis ove funkcije izgleda ovako:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample</span>(x, size, <span class="dt">replace =</span> <span class="ot">FALSE</span>, <span class="dt">prob =</span> <span class="ot">NULL</span>)</code></pre></div>
+<p>gdje je <code>x</code> vektor iz kojeg odabiremo vrijednosti, <code>size</code> broj vrijednosti koje želimo odabrati, <code>replace</code> zastavica koja opisuje da li se vrijednosti mogu ponavljati te konačno vektor <code>probs</code> pomoću kojeg zadajemo vjerojatnosti odabira pojedinih elemenata. Po <em>default</em>-u svi elementi imaju jednake vjerojatnosti, a ukoliko koristimo ovaj parametar moramo voditi računa da broj elemenata odgovara broju elemenata originalnog vektora; vjerojatnosti ne moraju imati zbroj 1 budući da će ih <em>R</em> skalirati prije uporabe (tako da ih više možemo tretirati kao “težine”).</p>
+<p>Podsjetimo se kako radi <code>sample</code> funkcija na vrlo jednostavnom primjeru Monte Carlo simulacije bacanja novčića (“Monte Carlo” simulacija u pravilu znači ponavljanje nekog scenarija veliki broj puta uz pomoć računalnog algoritma kako bi se mogli donijeti određeni zaključci o navedenom scenariju, npr. glede vjerojatnosti pojave nekog događaja).</p>
+<hr />
+<p><strong>Zadatak 13.5 - funkcija ‘sample’</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+<span class="co"># napišite funkciju `baciNovcic(n)` koja će vratiti vektor duljine `n` sa nasumično </span>
+<span class="co"># odabranim vrijednostima 0 (pismo) i 1 (glava)</span>
+<span class="co"># bacite novčić 10, 100, 1000 i 100,000 puta te ispišite postotak slučajeva kada je ispala &quot;glava&quot;</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">baciNovcic &lt;-<span class="st"> </span>function(n) 
+  <span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), n, <span class="dt">replace =</span> T)
+
+<span class="kw">baciNovcic</span>(<span class="dv">10</span>) %&gt;%<span class="st"> </span>mean
+<span class="kw">baciNovcic</span>(<span class="dv">100</span>) %&gt;%<span class="st"> </span>mean
+<span class="kw">baciNovcic</span>(<span class="dv">1000</span>) %&gt;%<span class="st"> </span>mean
+<span class="kw">baciNovcic</span>(<span class="dv">100000</span>) %&gt;%<span class="st"> </span>mean</code></pre></div>
+<pre><code>## [1] 0.7
+## [1] 0.39
+## [1] 0.519
+## [1] 0.50057</code></pre>
+</div>
+<hr />
+<p>Na sličan način možemo provjeriti kolika je vjerojatnost pojedinog zbroja kod bacanja dvije kockice. Ovdje nam nije dosta jedan poziv funkcije <code>sample</code>, već trebamo zbroj dva poziva te funkcije kojeg ćemo računati velikih broj puta. Jedno od mogućih rješenja kako ovo isprogramirati jest uz pomoć petlje, no budući da znamo kako je u jeziku <em>R</em> poželjno izbjeći petlje ukoliko je to moguće, preporučljivije je koristiti funkciju <code>replicate</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">replicate</span>(n, expr, <span class="dt">simplify =</span> <span class="st">&quot;array&quot;</span>)</code></pre></div>
+<p>Ova funkcija uzima izraz <code>expr</code> i ponavlja ga <code>n</code> puta, pri čemu slaže međurezultate u prikladnu strukturu (ukoliko pogledamo dokumentaciju, uvidjet ćemo da je ova funkcija zapravo izvedenica funkcije <code>sapply</code>).</p>
+<hr />
+<p><strong>Zadatak 13.6 - funkcija ‘replicate’</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+<span class="co"># napravite funkciju `baci2kockice(n)` koja vraća vektor od n elemenata</span>
+<span class="co"># gdje je svaki element zbroj rezultata jednog bacanja dvije kockice</span>
+
+<span class="co"># ispišite vjerojatnosti svakog mogućeg zbroja za 100, 1000 i 1,000,000 bacanja kockice</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">baci2kockice &lt;-<span class="st"> </span>function(n) 
+  <span class="kw">replicate</span>(n, <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">1</span>) +<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">1</span>))
+
+<span class="kw">table</span>(<span class="kw">baci2kockice</span>(<span class="dv">100</span>)) /<span class="st"> </span><span class="dv">100</span>
+<span class="kw">table</span>(<span class="kw">baci2kockice</span>(<span class="dv">1000</span>)) /<span class="st"> </span><span class="dv">1000</span>
+<span class="kw">round</span>(<span class="kw">table</span>(<span class="kw">baci2kockice</span>(<span class="dv">1000000</span>)) /<span class="st"> </span><span class="dv">1000000</span>, <span class="dv">3</span>)</code></pre></div>
+<pre><code>## 
+##    2    3    4    5    6    7    8    9   10   11   12 
+## 0.03 0.06 0.09 0.16 0.10 0.20 0.14 0.06 0.12 0.03 0.01 
+## 
+##     2     3     4     5     6     7     8     9    10    11    12 
+## 0.028 0.052 0.072 0.110 0.157 0.186 0.139 0.111 0.070 0.048 0.027 
+## 
+##     2     3     4     5     6     7     8     9    10    11    12 
+## 0.028 0.056 0.084 0.111 0.139 0.167 0.139 0.111 0.083 0.056 0.028</code></pre>
+</div>
+<hr />
+<p>Ponekad želimo imati zapis svih provedenih simulacija. Npr. recimo da želimo 1000 puta ponoviti simulaciju bacanja kockice 100 puta te da sve rezultate želimo imati trajno pohranjene kako bi nad njima mogli raditi različite izračune. Za ovo nam je pogodno koristiti matricu dimenzija 1000 x 100 gdje svaki redak predstavlja jednu simulaciju od 100 bacanja.</p>
+<p>Već smo prikazali funkciju <code>replicate</code> koja će u slučaju da dani izraz <code>expr</code> vraća jednu vrijednost kao konačni rezultat vratiti vektor. Ukoliko <code>expr</code> vraća vektor konzistentne duljine <code>replicate</code> će vratiti matricu. Potencijalni problem nam može predstavljati činjenica da će <code>replicate</code> rezultate poredati “po stupcima”, tako da je uputno njezin rezultat prije daljnjeg korištenja transponirati uz pomoć funkcije <code>t</code>.</p>
+<hr />
+<p><strong>Zadatak 13.7 - matrica kao rezultat funkcije ‘replicate’</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+<span class="co"># 1000 puta ponovite simulaciju bacanja kockice 100 puta</span>
+<span class="co"># rezultate pohranite u varijablu `rez`</span>
+<span class="co"># koristite funkciju `replicate` čiji rezultat ćete transponirati</span>
+<span class="co"># budite oprezni ako koristite ternarni operator (razmislite zašto!)</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">100</span>, T)) %&gt;%<span class="st"> </span>t -&gt;<span class="st"> </span>rez </code></pre></div>
+</div>
+<hr />
+<p><strong>Zadatak 13.8 - vizualizacija rezultata simulacije</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># nacrtajte razdiobu suma bacanja dobivenih u simulacijama pohranjenim u varijabli `rez`</span>
+<span class="co"># za računanje sumi koristite funkciju `apply` ili `rowSums`</span>
+<span class="co"># u varijablu `prosjSum` upišite prosječnu sumu zaokruženu na 2 decimale</span>
+<span class="co"># za crtanje razdiobe koristite `ggplot` i `geom_density`</span>
+<span class="co"># dodajte crvenu vertikalnu liniju na sredini uz pomoć fukcije `geom_vline`</span>
+<span class="co">#    (estetika `xintercept` postavljena na `prosjSum`)</span>
+<span class="co"># i iznos sredine crvene boje uz pomoć funkcije `geom_text` </span>
+<span class="co">#    ( parametar `label` postavljen na `prosjSum`, parametri `x` i `y` uz liniju)</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">1000</span>, <span class="dt">y =</span> <span class="kw">rowSums</span>(rez))
+prosjSum &lt;-<span class="st"> </span><span class="kw">mean</span>(df$y)
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(y)) +<span class="st"> </span><span class="kw">geom_density</span>() +<span class="st"> </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> prosjSum), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x =</span> prosjSum +<span class="st"> </span><span class="dv">6</span>, <span class="dt">y =</span> <span class="fl">0.0015</span>, <span class="dt">label =</span> <span class="kw">round</span>(prosjSum,<span class="dv">2</span>), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-470-1.png" width="672" /></p>
+</div>
+<hr />
+<p>Pokušajmo sada uz pomoć Monte Carlo simulacije izračunati vjerojatnost da u 10 bacanja novčića 8 puta novčić padne na “pismo”. Jedan od načina jest sličan već prikazanima - napravimo funkciju koja uz pomoć funkcije <code>sample</code> simulira bacanje novčića te potom pozivamo funkciju veliki broj puta i računamo koliko puta smo osam puta dobili “pismo”. No postoji i jednostavniji način.</p>
+<p>Jezik <em>R</em> sadrži funkciju <code>rbinom</code>, koja daje vektor proizvoljne duljine sa vrijednostima dobivenim nasumično iz zadane binomne razdiobe. Ukoliko ne znamo, binomna razdioba zasnovana je na događaju čija je vjerojatnost pojave <code>p</code> te opisuje kolika je šansa da u <code>n</code> slučajeva događaj uočimo neki zadani broj puta. U našem slučaju vjerojatnost pojave događaja je 50%, eksperiment ponavljamo 10 puta a traženi broj puta je 8. Pokušajmo prvo dobiti vjerojatnost uz pomoć slučajnih vrijednosti generiranih iz binomne razdiobe.</p>
+<hr />
+<p><strong>Zadatak 13.9 - funkcija ‘rbinom’</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+<span class="co"># stvorite 100, 1000 i 1000,000 slučajnih vrijednosti</span>
+<span class="co"># iz binomne razdiobe sa 10 ponavljanja i vjerojatnosti 0.5</span>
+<span class="co"># izračunajte vjerojatnost da se događaj pojavio točno 8 puta</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="kw">rbinom</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="fl">0.5</span>) ==<span class="st"> </span><span class="dv">8</span>) %&gt;%<span class="st"> </span>mean
+(<span class="kw">rbinom</span>(<span class="dv">1000</span>, <span class="dv">10</span>, <span class="fl">0.5</span>) ==<span class="st"> </span><span class="dv">8</span>) %&gt;%<span class="st"> </span>mean
+(<span class="kw">rbinom</span>(<span class="dv">1000000</span>, <span class="dv">10</span>, <span class="fl">0.5</span>) ==<span class="st"> </span><span class="dv">8</span>) %&gt;%<span class="st"> </span>mean</code></pre></div>
+<pre><code>## [1] 0
+## [1] 0.064
+## [1] 0.043845</code></pre>
+</div>
+<hr />
+<p>Točnu vjerojatnost možemo odrediti matematički, ali i uz pomoć funkcije <code>dbinom</code> koja radi slično funkciji <code>dnorm</code>, s time da kod diskretne slučajne varijable možemo direktno iz funkcije gustoće očitati vjerojatnost.</p>
+<p>Funkciju <code>dbinom</code> možemo i vizualizirati uz pomoć stupčanog grafa. Budući da visinu stupića ne računamo, već direktno čitamo, za parametar <code>stat</code> moramo staviti <code>identity</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># izgled funkcija dbinom za 10 bacanja novčića</span>
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x &lt;-<span class="st"> </span><span class="dv">0</span>:<span class="dv">10</span>, y &lt;-<span class="st"> </span><span class="kw">dbinom</span>(x, <span class="dv">10</span>, <span class="fl">0.5</span>))
+<span class="kw">ggplot</span>(df, <span class="kw">aes</span>(x, y)) +<span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) +<span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;funkcija `dbinom`&quot;</span>) +
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span>:<span class="dv">10</span>)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-473-1.png" width="672" /></p>
+<hr />
+<p><strong>Zadatak 13.10 - funkcija ‘dbinom’</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># uz pomoć funkcije `dbinom` izračunajte vjerojatnost da u 10 bacanja novčića</span>
+<span class="co"># dobijemo &quot;pismo&quot; točno 8 puta</span>
+<span class="co"># usporedite s rezultatom dobivenim simulacijom</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbinom</span>(<span class="dv">8</span>, <span class="dv">10</span>, <span class="fl">0.5</span>)</code></pre></div>
+<pre><code>## [1] 0.04394531</code></pre>
+</div>
+<hr />
+<p>U ovome dijelu saznali smo neke osnovne alate jezika R za provođenje simulacija:</p>
+<ul>
+<li>kod simulacija se uglavnom koristimo funkcijom <code>sample</code> te funkcijama razdiobi sa prefiksom <code>r</code></li>
+<li>funkcija <code>replicate</code> je vrlo korisna za ponavljanje velikog broja simulacija i pomaže nam da izbjegnemo korištenje petlje (iako i petlje mogu biti korisne i ne treba ih u potpunosti zanemariti)</li>
+<li>matematičke metode te <code>d</code> i <code>p</code> funkcije razdiobi nam često mogu pomoći kod izračuna i ocjene vjerojatnosti dobivene simulacijom</li>
+</ul>
+<p>Simulacijama ćemo se vratiti u poglavlju o inferencijalnoj statistici, budući da one predstavljaju jednu od metoda provjere koliko je neka uočena pojava “vjerojatna” ako pretpostavimo da pripada određenoj razdiobi. Za više informacija o simulacijama te njihovoj uporabi za potrebe statistike možemo preporučiti knjigu <strong>“IntroStat with Randomization and Simulation”</strong> koja je otvoreno dostupna na <a href  = "https://www.openintro.org/stat/textbook.php?stat_book=isrs">ovoj poveznici</a>. Ova knjiga okvirno prolazi kroz iste teme kao i knjiga <strong>“OpenIntro Statistics”</strong>, no s većim naglaskom na simulacije i korištenje nasumično odabranih vrijednosti uz pomoć jezika R.</p>
+<hr />
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Programirajmo u R-u</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://www.fer.unizg.hr/en/damir.pintar" property="cc:attributionName" rel="cc:attributionURL">Damir Pintar</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://ratnip.github.io/FER_OPJR/" rel="dct:source">https://ratnip.github.io/FER_OPJR/</a></p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-diez2015openintro">
+<p>Diez, D.M., C.D. Barr, and M. Çetinkaya-Rundel. 2015. <em>OpenIntro Statistics</em>. OpenIntro, Incorporated. <a href="https://books.google.hr/books?id=xNMWswEACAAJ" class="uri">https://books.google.hr/books?id=xNMWswEACAAJ</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="vizualizacija-podataka-uz-paket-ggplot2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="deskriptivna.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["osnoveR.pdf"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"edit": null,
+"download": null,
+"search": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

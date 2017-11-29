@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Programirajmo u R-u - old</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Udžbenik za vještinu ‘Osnove programskog jezika R’ na Fakultetu elektrotehnike i računarstva, Sveučilište u Zagrebu.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Programirajmo u R-u - old" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Udžbenik za vještinu ‘Osnove programskog jezika R’ na Fakultetu elektrotehnike i računarstva, Sveučilište u Zagrebu." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Programirajmo u R-u - old" />
+  
+  <meta name="twitter:description" content="Udžbenik za vještinu ‘Osnove programskog jezika R’ na Fakultetu elektrotehnike i računarstva, Sveučilište u Zagrebu." />
+  
+
+<meta name="author" content="Damir Pintar">
+
+
+<meta name="date" content="2017-08-23">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="razdiobe.html">
+<link rel="next" href="regresija.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<style type="text/css">
+.showopt {
+  background-color: #004c93;
+  color: #FFFFFF; 
+  width: 140px;
+  height: 4	0px;
+  text-align: center;
+  vertical-align: middle !important;
+  float: right;
+  font-family: sans-serif;
+  font-size:10 pt;
+  border-radius: 8px;
+}
+
+.showopt:hover {
+    background-color: #dfe4f2;
+    color: #004c93;
+}
+
+pre.plot {
+  background-color: white !important;
+}
+</style>
+
+<script>
+ $(document).ready(function() {
+
+  $chunks = $('.fold');
+
+  $chunks.each(function () {
+
+    // add button to source code chunks
+    if ( $(this).hasClass('s') ) {
+      $('pre.r', this).prepend("<div class=\"showopt\">Prikaži rješenje</div><br style=\"line-height:22px;\"/>");
+      $('pre.r', this).children('code').attr('class', 'folded');
+    }
+
+    // add button to output chunks
+    if ( $(this).hasClass('o') ) {
+      $('pre:not(.r)', this).has('code').prepend("<div class=\"showopt\">Prikaži ispis</div><br style=\"line-height:22px;\"/>");
+      $('pre:not(.r)', this).children('code:not(r)').addClass('folded');
+
+      // add button to plots
+      $(this).find('img').wrap('<pre class=\"plot\"></pre>');
+      $('pre.plot', this).prepend("<div class=\"showopt\">Prikaži sliku</div><br style=\"line-height:22px;\"/>");
+      $('pre.plot', this).children('img').addClass('folded');
+
+    }
+  });
+
+  // hide all chunks when document is loaded
+  $('.folded').css('display', 'none')
+
+  // function to toggle the visibility
+  $('.showopt').click(function() {
+    var label = $(this).html();
+    if (label.indexOf("Prikaži") >= 0) {
+      $(this).html(label.replace("Prikaži", "Sakrij"));
+    } else {
+      $(this).html(label.replace("Sakrij", "Prikaži"));
+    }
+    $(this).siblings('code, img').slideToggle('fast', 'swing');
+  });
+});
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>(Udžbenik za vještinu “Osnove programskog jezika R”)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#predgovor"><i class="fa fa-check"></i>Predgovor</a></li>
+</ul></li>
+<li class="part"><span><b>I Osnovni elementi jezika R</b></span></li>
+<li class="chapter" data-level="1" data-path="uvod.html"><a href="uvod.html"><i class="fa fa-check"></i><b>1</b> Uvod</a><ul>
+<li class="chapter" data-level="1.1" data-path="uvod.html"><a href="uvod.html#sto-je-programski-jezik-r"><i class="fa fa-check"></i><b>1.1</b> Što je programski jezik R?</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="uvod.html"><a href="uvod.html#opcenito-o-r-u"><i class="fa fa-check"></i><b>1.1.1</b> Općenito o R-u</a></li>
+<li class="chapter" data-level="1.1.2" data-path="uvod.html"><a href="uvod.html#alternative-jeziku-r"><i class="fa fa-check"></i><b>1.1.2</b> Alternative jeziku R</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="uvod.html"><a href="uvod.html#instalacija-programske-podrske"><i class="fa fa-check"></i><b>1.2</b> Instalacija programske podrške</a></li>
+<li class="chapter" data-level="1.3" data-path="uvod.html"><a href="uvod.html#pregled-razvojnog-sucelja-rstudio"><i class="fa fa-check"></i><b>1.3</b> Pregled razvojnog sučelja <em>RStudio</em></a><ul>
+<li class="chapter" data-level="1.3.1" data-path="uvod.html"><a href="uvod.html#interaktivna-konzola"><i class="fa fa-check"></i><b>1.3.1</b> Interaktivna konzola</a></li>
+<li class="chapter" data-level="1.3.2" data-path="uvod.html"><a href="uvod.html#pisanje-r-skripti"><i class="fa fa-check"></i><b>1.3.2</b> Pisanje R skripti</a></li>
+<li class="chapter" data-level="1.3.3" data-path="uvod.html"><a href="uvod.html#r-markdown"><i class="fa fa-check"></i><b>1.3.3</b> <em>R Markdown</em></a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="uvod.html"><a href="uvod.html#kako-koristiti-ovaj-udzbenik"><i class="fa fa-check"></i><b>1.4</b> Kako koristiti ovaj udžbenik?</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tipovi.html"><a href="tipovi.html"><i class="fa fa-check"></i><b>2</b> Osnovni tipovi podataka i operatori</a><ul>
+<li class="chapter" data-level="2.1" data-path="tipovi.html"><a href="tipovi.html#osnovni-tipovi-podataka"><i class="fa fa-check"></i><b>2.1</b> Osnovni tipovi podataka</a></li>
+<li class="chapter" data-level="2.2" data-path="tipovi.html"><a href="tipovi.html#operatori"><i class="fa fa-check"></i><b>2.2</b> Operatori</a></li>
+<li class="chapter" data-level="2.3" data-path="tipovi.html"><a href="tipovi.html#nedostajuce-nepoznate-i-nemoguce-vrijednosti"><i class="fa fa-check"></i><b>2.3</b> Nedostajuće, nepoznate i nemoguće vrijednosti</a></li>
+<li class="chapter" data-level="" data-path="tipovi.html"><a href="tipovi.html#zadaci-za-vjezbu"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="vektori.html"><a href="vektori.html"><i class="fa fa-check"></i><b>3</b> Vektori, matrice i liste</a><ul>
+<li class="chapter" data-level="3.1" data-path="vektori.html"><a href="vektori.html#vektori"><i class="fa fa-check"></i><b>3.1</b> Vektori</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="vektori.html"><a href="vektori.html#stvaranje-vektora"><i class="fa fa-check"></i><b>3.1.1</b> Stvaranje vektora</a></li>
+<li class="chapter" data-level="3.1.2" data-path="vektori.html"><a href="vektori.html#operator"><i class="fa fa-check"></i><b>3.1.2</b> Operator <code>[</code></a></li>
+<li class="chapter" data-level="3.1.3" data-path="vektori.html"><a href="vektori.html#principi-vektorizacije-i-recikliranja"><i class="fa fa-check"></i><b>3.1.3</b> Principi vektorizacije i recikliranja</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="vektori.html"><a href="vektori.html#indeksni-vektori"><i class="fa fa-check"></i><b>3.2</b> Indeksni vektori</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="vektori.html"><a href="vektori.html#lokacijsko-indeksiranje"><i class="fa fa-check"></i><b>3.2.1</b> Lokacijsko indeksiranje</a></li>
+<li class="chapter" data-level="3.2.2" data-path="vektori.html"><a href="vektori.html#uvjetno-indeksiranje"><i class="fa fa-check"></i><b>3.2.2</b> Uvjetno indeksiranje</a></li>
+<li class="chapter" data-level="3.2.3" data-path="vektori.html"><a href="vektori.html#imensko-indeksiranje"><i class="fa fa-check"></i><b>3.2.3</b> Imensko indeksiranje</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="vektori.html"><a href="vektori.html#matrice-i-polja"><i class="fa fa-check"></i><b>3.3</b> Matrice i polja</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="vektori.html"><a href="vektori.html#rezanje-matrica"><i class="fa fa-check"></i><b>3.3.1</b> Rezanje matrica</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="vektori.html"><a href="vektori.html#liste"><i class="fa fa-check"></i><b>3.4</b> Liste</a></li>
+<li class="chapter" data-level="" data-path="vektori.html"><a href="vektori.html#zadaci-za-vjezbu-1"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="okviri.html"><a href="okviri.html"><i class="fa fa-check"></i><b>4</b> Podatkovni okviri i faktori</a><ul>
+<li class="chapter" data-level="4.1" data-path="okviri.html"><a href="okviri.html#podatkovni-okviri"><i class="fa fa-check"></i><b>4.1</b> Podatkovni okviri</a></li>
+<li class="chapter" data-level="4.2" data-path="okviri.html"><a href="okviri.html#odabir-redaka-i-stupaca-podatkovnih-okvira"><i class="fa fa-check"></i><b>4.2</b> Odabir redaka i stupaca podatkovnih okvira</a></li>
+<li class="chapter" data-level="4.3" data-path="okviri.html"><a href="okviri.html#dodavanje-i-brisanje-redaka-i-stupaca"><i class="fa fa-check"></i><b>4.3</b> Dodavanje i brisanje redaka i stupaca</a></li>
+<li class="chapter" data-level="4.4" data-path="okviri.html"><a href="okviri.html#faktori"><i class="fa fa-check"></i><b>4.4</b> Faktori</a></li>
+<li class="chapter" data-level="" data-path="okviri.html"><a href="okviri.html#zadaci-za-vjezbu-2"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="kontrola.html"><a href="kontrola.html"><i class="fa fa-check"></i><b>5</b> Kontrola toka i objekti</a><ul>
+<li class="chapter" data-level="5.1" data-path="kontrola.html"><a href="kontrola.html#naredbe-kontrole-toka"><i class="fa fa-check"></i><b>5.1</b> Naredbe kontrole toka</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="kontrola.html"><a href="kontrola.html#uvjetno-izvoenje-naredbi"><i class="fa fa-check"></i><b>5.1.1</b> Uvjetno izvođenje naredbi</a></li>
+<li class="chapter" data-level="5.1.2" data-path="kontrola.html"><a href="kontrola.html#programske-petlje"><i class="fa fa-check"></i><b>5.1.2</b> Programske petlje</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="kontrola.html"><a href="kontrola.html#objekti-u-r-u"><i class="fa fa-check"></i><b>5.2</b> Objekti u R-u</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="kontrola.html"><a href="kontrola.html#s3-objekti"><i class="fa fa-check"></i><b>5.2.1</b> S3 objekti</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="kontrola.html"><a href="kontrola.html#zadaci-za-vjezbu-3"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="paketi.html"><a href="paketi.html"><i class="fa fa-check"></i><b>6</b> Paketi, ugrađene funkcije i okoline</a><ul>
+<li class="chapter" data-level="6.1" data-path="paketi.html"><a href="paketi.html#rad-s-paketima"><i class="fa fa-check"></i><b>6.1</b> Rad s paketima</a></li>
+<li class="chapter" data-level="6.2" data-path="paketi.html"><a href="paketi.html#ugraene-funkcije"><i class="fa fa-check"></i><b>6.2</b> Ugrađene funkcije</a></li>
+<li class="chapter" data-level="6.3" data-path="paketi.html"><a href="paketi.html#okoline"><i class="fa fa-check"></i><b>6.3</b> Okoline</a></li>
+<li class="chapter" data-level="" data-path="paketi.html"><a href="paketi.html#zadaci-za-vjezbu-4"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="korisnik.html"><a href="korisnik.html"><i class="fa fa-check"></i><b>7</b> Korisnički definirane funkcije</a><ul>
+<li class="chapter" data-level="7.1" data-path="korisnik.html"><a href="korisnik.html#kako-definirati-funkciju"><i class="fa fa-check"></i><b>7.1</b> Kako definirati funkciju</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="korisnik.html"><a href="korisnik.html#princip-kopiranja-kod-izmjene-copy-on-modify"><i class="fa fa-check"></i><b>7.1.1</b> Princip “kopiranja kod izmjene” (copy-on-modify)</a></li>
+<li class="chapter" data-level="7.1.2" data-path="korisnik.html"><a href="korisnik.html#funkcija-kao-objekt"><i class="fa fa-check"></i><b>7.1.2</b> Funkcija kao objekt</a></li>
+<li class="chapter" data-level="7.1.3" data-path="korisnik.html"><a href="korisnik.html#genericke-funkcije"><i class="fa fa-check"></i><b>7.1.3</b> Generičke funkcije</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="korisnik.html"><a href="korisnik.html#zadaci-za-vjezbu-5"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html"><i class="fa fa-check"></i><b>8</b> Porodica funkcija <code id="apply">apply</code></a><ul>
+<li class="chapter" data-level="8.1" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#sto-su-apply-funkcije"><i class="fa fa-check"></i><b>8.1</b> Što su <code>apply</code> funkcije?</a></li>
+<li class="chapter" data-level="8.2" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#funkcija-apply"><i class="fa fa-check"></i><b>8.2</b> Funkcija <code>apply</code></a></li>
+<li class="chapter" data-level="8.3" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#funkcije-lapply-sapply-i-vapply"><i class="fa fa-check"></i><b>8.3</b> Funkcije <code>lapply</code>, <code>sapply</code> i <code>vapply</code></a></li>
+<li class="chapter" data-level="8.4" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#ostale-funkcije-iz-porodice-apply-i-dostupne-alternative"><i class="fa fa-check"></i><b>8.4</b> Ostale funkcije iz porodice <code>apply</code> i dostupne alternative</a></li>
+<li class="chapter" data-level="" data-path="porodica-funkcija-apply.html"><a href="porodica-funkcija-apply.html#zadaci-za-vjezbu-6"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="part"><span><b>II Upravljanje podacima i vizualizacije</b></span></li>
+<li class="chapter" data-level="9" data-path="cijev.html"><a href="cijev.html"><i class="fa fa-check"></i><b>9</b> Operator cjevovoda i uredni podaci</a><ul>
+<li class="chapter" data-level="9.1" data-path="cijev.html"><a href="cijev.html#operator-cjevovoda"><i class="fa fa-check"></i><b>9.1</b> Operator cjevovoda</a></li>
+<li class="chapter" data-level="9.2" data-path="cijev.html"><a href="cijev.html#uredni-podaci"><i class="fa fa-check"></i><b>9.2</b> Uredni podaci</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="cijev.html"><a href="cijev.html#funkcije-gather-i-spread"><i class="fa fa-check"></i><b>9.2.1</b> Funkcije <code>gather</code> i <code>spread</code></a></li>
+<li class="chapter" data-level="9.2.2" data-path="cijev.html"><a href="cijev.html#funkcije-separate-i-unite"><i class="fa fa-check"></i><b>9.2.2</b> Funkcije <code>separate</code> i <code>unite</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="cijev.html"><a href="cijev.html#zadaci-za-vjezbu-7"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="datumi.html"><a href="datumi.html"><i class="fa fa-check"></i><b>10</b> Rad sa datumima i znakovnim nizovima</a><ul>
+<li class="chapter" data-level="10.1" data-path="datumi.html"><a href="datumi.html#rad-sa-datumima"><i class="fa fa-check"></i><b>10.1</b> Rad sa datumima</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="datumi.html"><a href="datumi.html#klasa-date"><i class="fa fa-check"></i><b>10.1.1</b> Klasa <code>Date</code></a></li>
+<li class="chapter" data-level="10.1.2" data-path="datumi.html"><a href="datumi.html#klase-posixct-i-posixlt"><i class="fa fa-check"></i><b>10.1.2</b> Klase <code>POSIXct</code> i <code>POSIXlt</code></a></li>
+<li class="chapter" data-level="10.1.3" data-path="datumi.html"><a href="datumi.html#paket-lubridate"><i class="fa fa-check"></i><b>10.1.3</b> Paket <code>lubridate</code></a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="datumi.html"><a href="datumi.html#rad-sa-znakovnim-nizovima"><i class="fa fa-check"></i><b>10.2</b> Rad sa znakovnim nizovima</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="datumi.html"><a href="datumi.html#analiza-teksta-i-regularni-izrazi"><i class="fa fa-check"></i><b>10.2.1</b> Analiza teksta i regularni izrazi</a></li>
+<li class="chapter" data-level="10.2.2" data-path="datumi.html"><a href="datumi.html#paket-stringr"><i class="fa fa-check"></i><b>10.2.2</b> Paket <code>stringr</code></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="datumi.html"><a href="datumi.html#zadaci-za-vjezbu-8"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><i class="fa fa-check"></i><b>11</b> Prilagodba podatkovnih skupova uz paket <code>dplyr</code></a><ul>
+<li class="chapter" data-level="11.1" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#ogledni-podatkovni-skup-titanic"><i class="fa fa-check"></i><b>11.1</b> Ogledni podatkovni skup: <em>Titanic</em></a></li>
+<li class="chapter" data-level="11.2" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#stvaranje-podskupa-obzervacija-uz-filter-i-slice"><i class="fa fa-check"></i><b>11.2</b> Stvaranje podskupa obzervacija uz <code>filter</code> i <code>slice</code></a></li>
+<li class="chapter" data-level="11.3" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#stvaranje-podskupa-varijabli-uz-select"><i class="fa fa-check"></i><b>11.3</b> Stvaranje podskupa varijabli uz <code>select</code></a></li>
+<li class="chapter" data-level="11.4" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#stvaranje-novih-stupaca-uz-mutate"><i class="fa fa-check"></i><b>11.4</b> Stvaranje novih stupaca uz <code>mutate</code></a></li>
+<li class="chapter" data-level="11.5" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#ogledni-podatkovni-skup-houston-flights"><i class="fa fa-check"></i><b>11.5</b> Ogledni podatkovni skup: <em>Houston flights</em></a></li>
+<li class="chapter" data-level="11.6" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#grupiranje-i-agregacija-uz-group_by-i-summarise"><i class="fa fa-check"></i><b>11.6</b> Grupiranje i agregacija uz <code>group_by</code> i <code>summarise</code></a></li>
+<li class="chapter" data-level="11.7" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#spajanje-podatkovnih-okvira-uz-join-funkcije"><i class="fa fa-check"></i><b>11.7</b> Spajanje podatkovnih okvira uz join funkcije</a></li>
+<li class="chapter" data-level="11.8" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#integracija-sa-relacijskim-bazama-podataka"><i class="fa fa-check"></i><b>11.8</b> Integracija sa relacijskim bazama podataka</a></li>
+<li class="chapter" data-level="" data-path="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html"><a href="prilagodba-podatkovnih-skupova-uz-paket-dplyr.html#zadaci-za-vjezbu-9"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html"><i class="fa fa-check"></i><b>12</b> Vizualizacija podataka uz paket <code id="ggplot2">ggplot2</code></a><ul>
+<li class="chapter" data-level="12.1" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#eksploratorna-analiza-podataka"><i class="fa fa-check"></i><b>12.1</b> Eksploratorna analiza podataka</a></li>
+<li class="chapter" data-level="12.2" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#vizualizacija-podataka-uz-pomoc-jezika-r"><i class="fa fa-check"></i><b>12.2</b> Vizualizacija podataka uz pomoć jezika R</a></li>
+<li class="chapter" data-level="12.3" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#graficka-gramatika-i-paket-ggplot2"><i class="fa fa-check"></i><b>12.3</b> Grafička gramatika i paket <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="12.3.1" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#aspekti-podataka-estetike-i-geometrije"><i class="fa fa-check"></i><b>12.3.1</b> Aspekti podataka, estetike i geometrije</a></li>
+<li class="chapter" data-level="12.3.2" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#fiksni-parametri-geometrije"><i class="fa fa-check"></i><b>12.3.2</b> Fiksni parametri geometrije</a></li>
+<li class="chapter" data-level="12.3.3" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#aspekti-statistike-i-pozicije"><i class="fa fa-check"></i><b>12.3.3</b> Aspekti statistike i pozicije</a></li>
+<li class="chapter" data-level="12.3.4" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#povezanost-geometrije-i-statistike"><i class="fa fa-check"></i><b>12.3.4</b> Povezanost geometrije i statistike</a></li>
+<li class="chapter" data-level="12.3.5" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#aspekti-skale-koordinatnog-sustava-i-teme"><i class="fa fa-check"></i><b>12.3.5</b> Aspekti skale, koordinatnog sustava i teme</a></li>
+<li class="chapter" data-level="12.3.6" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#uvjetni-facetirani-grafovi"><i class="fa fa-check"></i><b>12.3.6</b> Uvjetni (facetirani) grafovi</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#grafovi-u-eksploratornoj-analizi-i-izvjestavanju"><i class="fa fa-check"></i><b>12.4</b> Grafovi u eksploratornoj analizi i izvještavanju</a></li>
+<li class="chapter" data-level="" data-path="vizualizacija-podataka-uz-paket-ggplot2.html"><a href="vizualizacija-podataka-uz-paket-ggplot2.html#zadaci-za-vjezbu-10"><i class="fa fa-check"></i>Zadaci za vježbu</a></li>
+</ul></li>
+<li class="part"><span><b>III Statistika i strojno učenje u jeziku R</b></span></li>
+<li class="chapter" data-level="13" data-path="razdiobe.html"><a href="razdiobe.html"><i class="fa fa-check"></i><b>13</b> Statističko programiranje, razdiobe i simulacije</a><ul>
+<li class="chapter" data-level="13.1" data-path="razdiobe.html"><a href="razdiobe.html#rad-sa-razdiobama-vjerojatnosti-u-jeziku-r"><i class="fa fa-check"></i><b>13.1</b> Rad sa razdiobama vjerojatnosti u jeziku R</a></li>
+<li class="chapter" data-level="13.2" data-path="razdiobe.html"><a href="razdiobe.html#simulacije"><i class="fa fa-check"></i><b>13.2</b> Simulacije</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="deskriptivna.html"><a href="deskriptivna.html"><i class="fa fa-check"></i><b>14</b> Deskriptivna i inferencijalna statistika u jeziku R</a><ul>
+<li class="chapter" data-level="14.1" data-path="deskriptivna.html"><a href="deskriptivna.html#deskriptivna-statistika"><i class="fa fa-check"></i><b>14.1</b> Deskriptivna statistika</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="deskriptivna.html"><a href="deskriptivna.html#univarijantna-deskriptivna-statistika"><i class="fa fa-check"></i><b>14.1.1</b> Univarijantna deskriptivna statistika</a></li>
+<li class="chapter" data-level="14.1.2" data-path="deskriptivna.html"><a href="deskriptivna.html#bivarijantna-i-multivarijantna-deskriptivna-statistika"><i class="fa fa-check"></i><b>14.1.2</b> Bivarijantna i multivarijantna deskriptivna statistika</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="deskriptivna.html"><a href="deskriptivna.html#inferencijalna-statistika"><i class="fa fa-check"></i><b>14.2</b> Inferencijalna statistika</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="deskriptivna.html"><a href="deskriptivna.html#testiranje-hipoteza"><i class="fa fa-check"></i><b>14.2.1</b> Testiranje hipoteza</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="regresija.html"><a href="regresija.html"><i class="fa fa-check"></i><b>15</b> Odabrane metode strojnog učenja: regresijska analiza</a><ul>
+<li class="chapter" data-level="15.1" data-path="regresija.html"><a href="regresija.html#strojno-ucenje-i-prediktivna-analiza"><i class="fa fa-check"></i><b>15.1</b> Strojno učenje i prediktivna analiza</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="regresija.html"><a href="regresija.html#stvaranje-prediktivnog-modela"><i class="fa fa-check"></i><b>15.1.1</b> Stvaranje prediktivnog modela</a></li>
+<li class="chapter" data-level="15.1.2" data-path="regresija.html"><a href="regresija.html#jednostavna-linearna-regresija"><i class="fa fa-check"></i><b>15.1.2</b> Jednostavna linearna regresija</a></li>
+<li class="chapter" data-level="15.1.3" data-path="regresija.html"><a href="regresija.html#funkcija-lm"><i class="fa fa-check"></i><b>15.1.3</b> Funkcija <code>lm</code></a></li>
+<li class="chapter" data-level="15.1.4" data-path="regresija.html"><a href="regresija.html#linearna-regresija-i-kategorijske-varijable"><i class="fa fa-check"></i><b>15.1.4</b> Linearna regresija i kategorijske varijable</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="regresija.html"><a href="regresija.html#visestruka-multipla-linearna-regresija"><i class="fa fa-check"></i><b>15.2</b> Višestruka (multipla) linearna regresija</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Programirajmo u R-u - old</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="deskriptivna" class="section level1">
+<h1><span class="header-section-number">14</span> Deskriptivna i inferencijalna statistika u jeziku R</h1>
+<p>Općenito rečeno, statistika je matematička disciplina koja proučava načine sakupljanja, sažimanja i prikazivanja zaključaka iz nekih podataka. U praksi statistiku najčešće koristimo kako bi na sažeti način opisali neki podatkovni skup budući da se niz tabličnih podataka relativno teško može interpretirati u svojem integralnom obliku. Statističke metode omogućuje nam razumijevanje varijabli podatkovnog skupa i njihovih međuodnosa te nam daju temelje za lakšu komunikaciju dobivenih zaključaka.</p>
+<p>Literatura koja se bavi uvodom u statistiku često radi distinkciju između deskriptivne i inferencijalne statistike, ne zbog toga što su to dva izdvojena segmenta statistike, već uglavnom kako bi se lakše mogli objasniti neki osnovni statistički pojmovi u odgovarajućem kontekstu. Mi ćemo se u nastavku također držati ove distinkcije, budući da nam daje dobru podlogu za pregled dostupnih metoda jezika R za obavljanje određenih poslova statističke analize.</p>
+<hr />
+<div id="deskriptivna-statistika" class="section level2">
+<h2><span class="header-section-number">14.1</span> Deskriptivna statistika</h2>
+<p>Glavni cilj deskriptivne statistike jest sažeto opisati neke podatke uz pomoć numeričkih vrijednosti ili vizualizacija. Spomenuti pojam eksploratorne analize podataka zapravo se može objasniti i kao primjena metoda deskriptivne statistike nad novim podatkovnim skupom.</p>
+<p>Kada gledamo novi, nepoznati podatkovni skup, jedna od prvih stvari koju proučavamo su tipovi varijabli (stupaca) u dobivenom podatkovnom skupu. Statistika varijable često razvrstava na <em>nominalne, ordinalne, intervalne i omjerne</em>, no mi ćemo u nastavku uglavnom koristiti jednostavnu podjelu na</p>
+<ul>
+<li>numeričke i</li>
+<li>kategorijske</li>
+</ul>
+<p>zbog bržeg i jednostavnijeg prikaza metoda njihove obrade (pri čemu ćemo voditi računa o tome da diskretne numeričke varijable - kao što je npr. bacanje kockice - imaju svojstva i jedne i druge vrste tj. za njihovu obradu možemo koristiti i određene metode prilagođene numeričkim, ali i one namijenjene prvenstveno kategorijskim varijablama).</p>
+<p>Učitajmo ponovo podatkovni skup <code>Titanic</code> kojeg smo upoznali u lekciji o upravljanju podatkovnim skupovima.</p>
+<hr />
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># učitajte podatke iz datoteke `Titanic.csv` u varijablu `titanic`</span>
+<span class="co"># nemojte koristiti parametar `stringsAsFactors = F` budući da nam u ovom podatkovnom skupu</span>
+<span class="co"># uglavnom odgovara faktoriziranje znakovnih varijabli</span>
+titanic &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;Titanic.csv&quot;</span>)
+titanic$Survived &lt;-<span class="st"> </span><span class="kw">as.factor</span>(titanic$Survived) <span class="co"># ovo su također faktori</span>
+titanic$Pclass &lt;-<span class="st"> </span><span class="kw">as.factor</span>(titanic$Pclass)
+
+<span class="co"># proučite podatkovni okvir `Titanic`</span>
+<span class="kw">glimpse</span>(titanic)</code></pre></div>
+<pre><code>## Observations: 891
+## Variables: 12
+## $ PassengerId &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,...
+## $ Survived    &lt;fctr&gt; 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0...
+## $ Pclass      &lt;fctr&gt; 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3...
+## $ Name        &lt;fctr&gt; Braund, Mr. Owen Harris, Cumings, Mrs. John Bradl...
+## $ Sex         &lt;fctr&gt; male, female, female, female, male, male, male, m...
+## $ Age         &lt;dbl&gt; 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, ...
+## $ SibSp       &lt;int&gt; 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4,...
+## $ Parch       &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1,...
+## $ Ticket      &lt;fctr&gt; A/5 21171, PC 17599, STON/O2. 3101282, 113803, 37...
+## $ Fare        &lt;dbl&gt; 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, ...
+## $ Cabin       &lt;fctr&gt; , C85, , C123, , , E46, , , , G6, C103, , , , , ,...
+## $ Embarked    &lt;fctr&gt; S, C, S, S, S, Q, S, S, S, C, S, S, S, S, S, S, Q...</code></pre>
+<hr />
+<div id="univarijantna-deskriptivna-statistika" class="section level3">
+<h3><span class="header-section-number">14.1.1</span> Univarijantna deskriptivna statistika</h3>
+<p>Pod pojmom <em>univarijantne deskriptivne statistike</em> zapravo mislimo da gledamo samo jednu varijablu podatkovnog skupa. Drugim riječima, zanima nas ponašanje tj. varijabilnost podataka unutar jednog stupca.</p>
+<p>Kod <strong>kategorijskih</strong> podataka u pravilu možemo postaviti samo jedno pitanje:</p>
+<ul>
+<li>koja je zastupljenost pojedine kategorije?</li>
+</ul>
+<p>Odgovor na ovo pitanje možemo prikazati:</p>
+<ul>
+<li>numerički (npr. uz pomoć funkcije <code>table</code> ili funkcije <code>describe</code> iz paketa <code>Hmisc</code>)</li>
+<li>vizualizacijom (npr. uz pomoć stupčanog grafa)</li>
+</ul>
+<p>Svi daljnji zadaci odnose se na podatkovni okvir <code>titanic</code>.</p>
+<hr />
+<p><strong>Zadatak 14.1 - numerički ispis zastupljenosti kategorija</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># numerički prikažite zastupljenost pojedinih kategorijama</span>
+<span class="co"># za varijable `Sex`,  `Pclass` i `Survived`</span>
+<span class="co"># isprobajte funkciju `table` i funkciju `describe` (iz paketa `Hmisc`)</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># numerički prikažite zastupljenost pojedinih kategorijama</span>
+<span class="co"># za varijable `Sex`,  `Pclass` i `Survived` </span>
+<span class="kw">table</span>(titanic$Sex)
+<span class="kw">cat</span>(<span class="st">&quot;--------------</span><span class="ch">\n</span><span class="st">&quot;</span>)
+<span class="kw">table</span>(titanic$Pclass)
+<span class="kw">cat</span>(<span class="st">&quot;--------------</span><span class="ch">\n</span><span class="st">&quot;</span>)
+<span class="kw">table</span>(titanic$Survived)
+<span class="kw">cat</span>(<span class="st">&quot;--------------</span><span class="ch">\n</span><span class="st">&quot;</span>)
+
+<span class="co">#library(Hmisc) #ukoliko je potrebno</span>
+<span class="kw">describe</span>(titanic$Sex)
+<span class="kw">cat</span>(<span class="st">&quot;--------------</span><span class="ch">\n</span><span class="st">&quot;</span>)
+<span class="kw">describe</span>(titanic$Pclass)
+<span class="kw">cat</span>(<span class="st">&quot;--------------</span><span class="ch">\n</span><span class="st">&quot;</span>)
+<span class="kw">describe</span>(titanic$Survived)</code></pre></div>
+<pre><code>## 
+## female   male 
+##    314    577 
+## --------------
+## 
+##   1   2   3 
+## 216 184 491 
+## --------------
+## 
+##   0   1 
+## 549 342 
+## --------------
+## titanic$Sex 
+##        n  missing distinct 
+##      891        0        2 
+##                         
+## Value      female   male
+## Frequency     314    577
+## Proportion  0.352  0.648
+## --------------
+## titanic$Pclass 
+##        n  missing distinct 
+##      891        0        3 
+##                             
+## Value          1     2     3
+## Frequency    216   184   491
+## Proportion 0.242 0.207 0.551
+## --------------
+## titanic$Survived 
+##        n  missing distinct 
+##      891        0        2 
+##                       
+## Value          0     1
+## Frequency    549   342
+## Proportion 0.616 0.384</code></pre>
+</div>
+<hr />
+<p><strong>Zadatak 14.2 - vizualizacija zastupljenosti kategorija</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># vizualizirajte zastupljenost kategorija varijable `Pclass`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># vizualizirajte zastupljenost kategorija varijable `Pclass`</span>
+
+<span class="kw">ggplot</span>(titanic, <span class="kw">aes</span>(Pclass)) +<span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-481-1.png" width="672" /></p>
+</div>
+<hr />
+<p>Za numeričke varijable imamo nešto više opcija. Kod ovakvog tipa varijabli statističare često zanima njihova tzv. <strong>“centralna tendencija”</strong> (tj. da li se varijabla grupira oko neke središnje vrijednosti) te njihova <strong>“disperzija”</strong> (koliko se “daleko” varijabla širi oko te srednje vrijednosti i na koji način, npr. simetrično ili “nakrivljeno”). Kraće rečeno, statističara zapravo zanima <strong>razdioba</strong> ili <strong>gustoća razdiobe</strong> varijable, o kojima smo pričali u prethodnoj lekciji.</p>
+<p>“Srednju vrijednost” odabrane numeričke varijable možemo računati na više načina. Najčešće odabrane sredine su:</p>
+<ul>
+<li>aritmetička sredina (funkcija <code>mean</code>)</li>
+<li>medijan (funkcija <code>median</code>) - vrijednost u “sredini” svih vrijednosti ako ih poredamo po veličini</li>
+</ul>
+<p>Ključna razlika između ove dvije sredine jest ta što aritmetička sredina ima jasno definiranu matematičku podlogu ali je vrlo ovisna o karakteristikama podatkovnog skupa - pogotovo o tzv. “iskočnim vrijednostima” (engl. <em>outliers</em>). Medijan je robustnija mjera koju često odabiremo u slučajevima kada nas brine postojanje iskočnica unutar našeg podatkovnog skupa.</p>
+<hr />
+<p>Za ocjenu “disperzije” varijable koristimo:</p>
+<ul>
+<li>standardnu devijaciju / varijancu (funkcije <code>sd</code> i <code>var</code>)</li>
+<li>raspon varijabli (funkcija <code>range</code>)</li>
+<li>“interkvartalni” raspon (funkcija <code>IQR</code>)</li>
+</ul>
+<p>Varijanca i standardna devijacija zapravo opisuju usrednjenje kvadrata udaljenosti od sredine (standardna devijacija je korjenovana varijanca). Raspon varijabli je jednostavno razlika između najmanje i najveće vrijednosti unutar skupa. Budući da ova mjera zapravo ovisi o samo dvije obzervacije, koje vrlo često mogu biti iskočnice, za procjenu raspona varijabli često se preporučuje korištenje tzv. “interkvartalnog” raspona koji gleda razliku između vrijednosti na 25. percentilu i one na 75. percentilu (tj. “prvi kvartil” i “treći kvartil”. Iako na ovaj način “odbacujemo” pola podatkovnog skupa, dobivamo puno robustniju mjeru koja neće ovisiti isključivo o najekstremnijim vrijednostima unutar skupa.</p>
+<hr />
+<p>U statistici ćemo tako često čuti za pojam “sažetak kroz pet brojeva” (engl. <em>five-number summary</em>). Ti brojevi su <em>minimum</em>. <em>prvi kvartil</em>, <em>sredina</em>, <em>treći kvartil</em>, <em>maksimum</em>. Pod pojmom “sredine” obično mislimo medijan, iako statistički alati u ovaj sažetak često ubacuju i aritmetičku sredinu, čime on zapravo formalno postaje “sažetak od šest brojeva”.</p>
+<p>Već smo gore spomenuli koje funkcije jezika R omogućuju izračun pojedine vrijednosti, no R također nudi i funkcije koje nam vraćaju više rezultata odjednom. Najčešće funkcije su:</p>
+<ul>
+<li><code>summary</code> - za numeričke varijable nam da je “sažetak od šest brojeva”</li>
+<li><code>describe</code> (paket <code>Hmisc</code>) - daje sažetak ali i mnoštvo dodatnih korisnih informacija</li>
+</ul>
+<hr />
+<p><strong>Zadatak 14.3 - izračun pojedinačnih stastistika numeričke varijable</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ispišite aritmetičku sredinu, medijan, standardnu devijaciju, raspon i interkvartalni raspon</span>
+<span class="co"># varijable `Age` podatkovnog okvira `Titanic`</span>
+<span class="co"># pripazite na nedostajuće vrijednosti!  (sjetite se parametra `na.rm`)</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(titanic$Age, <span class="dt">na.rm =</span> T)
+<span class="kw">median</span>(titanic$Age, <span class="dt">na.rm =</span> T)
+<span class="kw">sd</span>(titanic$Age, <span class="dt">na.rm =</span> T)
+<span class="kw">range</span>(titanic$Age, <span class="dt">na.rm =</span> T)
+<span class="kw">IQR</span>(titanic$Age, <span class="dt">na.rm =</span> T)</code></pre></div>
+<pre><code>## [1] 29.69912
+## [1] 28
+## [1] 14.5265
+## [1]  0.42 80.00
+## [1] 17.875</code></pre>
+</div>
+<hr />
+<p><strong>Zadatak 14.4 - skupni izračun stastistika numeričke varijable</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># uz pomoć funkcije `summary` ispišite statistike varijable `Fare` podatkovnog okvira `Titanic`</span>
+
+<span class="co"># uz pomoć funkcije `describe` ispišite statistike varijable `Age` podatkovnog okvira `Titanic`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(titanic$Fare)
+<span class="kw">cat</span>(<span class="st">&quot;--------------</span><span class="ch">\n</span><span class="st">&quot;</span>)
+
+<span class="co">#library(Hmisc) # ukoliko je potrebno</span>
+<span class="kw">describe</span>(titanic$Age)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    7.91   14.45   32.20   31.00  512.30 
+## --------------
+## titanic$Age 
+##        n  missing distinct     Info     Mean      Gmd      .05      .10 
+##      714      177       88    0.999     29.7    16.21     4.00    14.00 
+##      .25      .50      .75      .90      .95 
+##    20.12    28.00    38.00    50.00    56.00 
+## 
+## lowest :  0.42  0.67  0.75  0.83  0.92, highest: 70.00 70.50 71.00 74.00 80.00</code></pre>
+</div>
+<hr />
+<p>Za vizualizaciju numeričke varijable najčešće koristimo:</p>
+<ul>
+<li>histogram (geometrija <code>geom_hist</code> paketa <code>ggplot2</code>)</li>
+<li>poligram frekvencija (geometrija <code>freq_poly</code>)</li>
+<li>gustoću razdiobe (geometrija <code>geom_density</code>)</li>
+</ul>
+<p>Za histogram i poligram frekvencija moramo paziti na odabir veličine ladice što može znatno utjecati na izgled grafa, dok kod grafa gustoće razdiobe moramo voditi računa da se radi o procjeni funkcije razdiobe koja ne mora odražavati stvarne karakteristike skupa (npr. ako vrijednosti nisu kontinuirane ili stvarna gustoća razdiobe nije glatka funkcija).</p>
+<hr />
+<p><strong>Zadatak 14.5 - vizualizacija numeričke varijable</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># nacrtajte histogram varijable `Age` (proizovljno odaberite broj ladica)</span>
+
+<span class="co"># nacrtajte gustoću razdiobe varijable `Fare`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(titanic, <span class="kw">aes</span>(Age)) +<span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">10</span>, <span class="dt">na.rm =</span> T)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-487-1.png" width="672" /></p>
+</div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(titanic, <span class="kw">aes</span>(Fare)) +<span class="st"> </span><span class="kw">geom_density</span>()</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-488-1.png" width="672" /></p>
+</div>
+<hr />
+</div>
+<div id="bivarijantna-i-multivarijantna-deskriptivna-statistika" class="section level3">
+<h3><span class="header-section-number">14.1.2</span> Bivarijantna i multivarijantna deskriptivna statistika</h3>
+<p>Dok se univarijantna deskriptivna statistika bavila samo jednom varijablom, kod bivarijantne i multivarijantne deskriptivne statistike zanimaju nas odnosi <em>dvije ili više varijabli</em>. Budući da ovi odnosi mogu biti vrlo kompleksni, kao i metode otkrivanja i interpretacije istih, mi ćemo se ovdje uglavnom usredotočiti na pregled odnosa dvije varijable te uočavanja:</p>
+<ul>
+<li>postoji li međuovisnost između dvije varijable i ako da, kakve je prirode</li>
+<li>pojavljuju li se određena grupiranja</li>
+<li>uočavaju li se određene iskočnice</li>
+</ul>
+<p>Kao i kod univarijantne deskriptivne statistike, konkretne metode analize često ovise o tipu varijabli koje gledamo. Isto tako, kod analize obično gledamo određene numeričke pokazatelje ali se vrlo često oslanjamo na vizualizacije.</p>
+<p>Kod bivarijantne analize <strong>dvije numeričke varijable</strong> često nas zanima pojava tzv. <strong>kolinearnosti</strong>, tj. linearne zavisnosti među varijablama. Ukoliko uočimo da su varijable povezane pozitivnom ili negativnom linearnom vezom, tu informaciju često možemo iskoristiti na različite načine (npr. ako je u novom podatkovnom skupu jedna od te vrijednosti nepoznata druga nam može poslužiti do procijenimo njezin iznos).</p>
+<p>Kolinearnost možemo izračunati uz pomoć funkcije <code>cor</code>. Ova funkcija može računati različite vrste korelacije među varijablama, a <em>default</em>-na postavka je tzv. “Pearson-ov koeficijent korelacije” koji računa snagu linearne povezanosti varijabli. Kao njezin rezultat dobivamo <em>vrijednost između -1 i 1</em>; što je rezultat po apsolutnom iznosu bliži jedinici, to su varijable jače linearno korelirane.</p>
+<hr />
+<p><strong>Zadatak 14.6 - kolinearnost dvije numeričke varijable</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># izračunajte koeficijent kolinearnosti između varijabli `Age` i `Fare`</span>
+<span class="co"># koristite funkciju `cor`</span>
+<span class="co"># budući da u skupu ima nedostajućih vrijednosti, dodajte parametar</span>
+<span class="co">#       `use = &#39;complete&#39;`  (tj. &quot;koristi samo kompletne parove&quot;)</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(titanic$Age, titanic$Fare, <span class="dt">use =</span> <span class="st">&quot;complete&quot;</span>)</code></pre></div>
+<pre><code>## [1] 0.09606669</code></pre>
+</div>
+<hr />
+<p>Za vizualizaciju dvije numeričke varijable (uz pomoć paketa <code>ggplot2</code>) imamo puno opcija. Neke od češćih su:</p>
+<ul>
+<li>točkasti graf (geometrija <code>geom_point</code>)</li>
+<li>prikaz trenda (geometrija <code>geom_smooth</code>)</li>
+</ul>
+<p>U pravilu ako prikazujemo trend onda ga dodajemo na točkasti graf kako bismo dobili vizualni dojam u kojoj mjeri izračunati trend odgovara prikazanim vrijednostima obzervacija.</p>
+<hr />
+<p><strong>Zadatak 14.7 - vizualizacija dvije numeričke varijable</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># vizualizirajte odnos između numeričkih varijabli `Age` i `Fare`</span>
+<span class="co"># graf mora prikazivati i obzervacije i linearni trend</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(titanic, <span class="kw">aes</span>(Age, Fare)) +<span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">na.rm =</span> T) +<span class="st"> </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>, <span class="dt">na.rm =</span> T)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-492-1.png" width="672" /></p>
+</div>
+<hr />
+<p>Za analizu <em>dvije kategorijske varijable</em> često se koristimo tzv. <strong>kontingencijskom tablicom</strong>. Ovo zapravo nije ništa drugo već matrica frekvencija koja jednu kategorijsku varijablu stavlja u retke, drugu u stupce. U jeziku R se za izradu kontingencijske tablice koristimo istom funkcijom koju smo koristili kod univarijantne analize jedne kategorijske varijable - funkcijom <code>table</code> - kojoj ovaj put prosljeđujemo dvije varijable kao parametre.</p>
+<hr />
+<p><strong>Zadatak 14.8 - kontingencijska tablica</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ispišite kontingencijsku tablicu varijabli `Pclass` i `Survived`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(titanic$Pclass, titanic$Survived)</code></pre></div>
+<pre><code>##    
+##       0   1
+##   1  80 136
+##   2  97  87
+##   3 372 119</code></pre>
+</div>
+<hr />
+<p>Za vizualizaciju odnosa između dvije kategorijske varijable često se koristimo tzv. <strong>mozaik grafom</strong> (engl. <em>mosaic plot</em>). Budući da paket <code>ggplot2</code> trenutno nema podršku za ovakav tip grafa, možemo se poslužiti funkcijom <code>mosaicplot</code> iz osnovnog paketa jezika R, koja kao parametar prima kontingencijsku tablicu.</p>
+<hr />
+<p><strong>Zadatak 14.9 - vizualizacija dvije kategorijske varijable - mozaik graf</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># funkciji `mosaicplot` proslijedite </span>
+<span class="co"># kontingencijsku tablicu varijabli `Pclass` i `Survived`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mosaicplot</span>(<span class="kw">table</span>(titanic$Pclass, titanic$Survived))</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-496-1.png" width="672" /></p>
+</div>
+<hr />
+<p>Ukoliko želimo crtati mozaik grafove uz pomoć paketa <code>ggplot2</code>, jedna od opcija koje imamo na raspolaganju jest proučiti paket <code>ggmosaic</code> dostupan na CRAN repozitoriju ali kojeg ovdje nećemo posebno obrađivati.</p>
+<p>Za proučavanje odnosa numeričke i kategorijske varijable imamo više opcija na raspolaganju, a jedna od najpopularnijih je tzv. <em>boxplot</em> koji postavlja kategorije na os <code>x</code> te za svaku pojedinu kategoriju koristi vizualizaciju sa intuitivnim prikazom medijana, interkvartalnog raspona i mogućih iskočnica numeričke varijable na y-osi.</p>
+<hr />
+<p><strong>Zadatak 14.10 - ‘boxplot’ vizualizacija</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># uz pomoć `boxplot` grafa vizualizirajte odnos</span>
+<span class="co">#  varijabli `Pclass` i `Age`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(titanic, <span class="kw">aes</span>(Pclass, Age)) +<span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="dt">na.rm =</span> T)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-498-1.png" width="672" /></p>
+</div>
+<hr />
+<p>Alternativa prethodnom grafu je tzv. “violinski graf” koji će umjesto “kutija” nacrtati vertikalno orijentirane procijenjene gustoće razdiobi, tako da podsjećaju na izgled violine. U paketu <code>ggplot2</code> ovo radi geometrija <code>geom_violin</code>.</p>
+<hr />
+<p><strong>Zadatak 14.11 - vizualizacija uz pomoć violinskog grafa</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># uz pomoć violinskog grafa vizualizirajte odnos</span>
+<span class="co">#  varijabli `Pclass` i `Age`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(titanic, <span class="kw">aes</span>(<span class="kw">as.factor</span>(Pclass), Age)) +<span class="st"> </span><span class="kw">geom_violin</span>(<span class="dt">na.rm =</span> T)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-500-1.png" width="672" /></p>
+</div>
+<hr />
+<p><strong>Multivarijantnu deskriptivnu statistiku</strong> nećemo posebno obrađivati zbog ograničenog mjesta, no podsjetiti ćemo čitatelje da kod stvaranja vizualizacija za više od dvije varijable uvijek imaju opcije korištenja estetika boje, oblika i sl. te da postoji mogućnost crtanja uvjetnih (facetiranih) grafova. Na ovaj način možemo na dvodimenzionalnom grafu staviti veći broj varijabli, no moramo biti pažljivi oko načina interpretacije i donošenja zaključaka.</p>
+<p>Ovdje ćemo završiti priču o deskriptivnoj statistici. Za kraj, podsjetimo se već prikazane funkcije <code>ggpairs</code> paketa <code>GGally</code> koja nam omogućuje “masovnu vizualizaciju” podatkovnog skupa primjenom univarijantne i bivarijantne analize danog podatkovnog okvira u sklopu jedinstvenog grafa.</p>
+<hr />
+<p><strong>Zadatak 14.12 - funkcija ‘ggpairs’</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># uz pomoć funkcije `ggpairs` vizualizirajte podatkovni okvir `Titanic`</span>
+<span class="co"># zbog jasnoće prikaza izaberite samo stupce:</span>
+<span class="co">#    `Survived`, `Pclass`, `Sex`, `Age`, `Fare`, `Embarked`</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#library(GGally) ukoliko je potrebno</span>
+<span class="kw">ggpairs</span>(<span class="kw">select</span>(titanic, Survived, Pclass, Sex, Age, Fare, Embarked))</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-502-1.png" width="672" /></p>
+</div>
+<hr />
+</div>
+</div>
+<div id="inferencijalna-statistika" class="section level2">
+<h2><span class="header-section-number">14.2</span> Inferencijalna statistika</h2>
+<p>Deskriptivna statistika bavi se sažetim prikazom podatkovnog skupa uz pomoć različitih statističkih parametara vizualizacija. Kod inferencijalne statistike statističara zanimaju ista pitanja kao i kod deskriptivne, no razlika je u tome što na raspolaganju ima samo djelić ukupnog podatkovnog skupa - cijeli podatkovni skup se tako naziva “populacija” a dio koji imamo na raspolaganju se zove “uzorak” Naziv “inferencijalna” upravo upućuje na to da se tražene vrijednosti ne računaju direktno, one se “zaključuju”. Inferencijalna statistika bavi se pitanjima kao što su kako odabrati uzorak i koje veličine kako bi on dobro “reprezentirao” populaciju, procjenom koliko možemo “vjerovati” statistikama dobivenim analizom uzorka i sl.</p>
+<p>Budući da nemamo mjesta temeljito obraditi inferencijalnu statistiku na onoj razini koliko to područje zaslužuje, čitatelje opet upućujemo na alternative resursne koji se bave detaljnim uvodom i pregledom statistike. U nastavku ćemo zato tek predstaviti neke osnovne ideje inferencijalne statistike i uz pomoć jezika R demonstrirati kako one funkcioniraju u praksi.</p>
+<p>Počnimo sa sljedećim primjerom: zamislimo da imamo populaciju od 100,000 osoba čija visina se ravna po normalnoj razdiobi sa sredinom 175 cm i standardnom devijacijom od 25 cm. Statističar ne zna ove podatke, budući da nema praktičnog načina za ispitati cijelu populaciju - pretpostavimo da može samo prikupiti podatke slučajno odabranog uzorka. Može se postaviti pitanje - ako odaberemo slučajni uzorak od <code>n</code> osoba, zapišemo njihove visine i izračunamo aritmetičku sredinu tih visina, koliko ćemo “točno pogoditi” aritmetičku sredinu visine cijele populacije?</p>
+<p>Pokušajmo riješiti ovaj problem uz pomoć simulacije. Stvorit ćemo navedenu populaciju uz pomoć funkcije <code>rnorm</code>, a potom ćemo odabrati veličinu uzorka. Potom ćemo zadati R-u da za svaku veličinu uzorka deset puta ponovi uzorkovanje i za svaki pojedini uzorak predoči svojom linijom gustoće razdiobe. Ono što nas zanima jest kako će ta gustoća razdiobe izgledati naspram gustoće razdiobe populacije.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+
+<span class="co"># populacija od 100,000 osoba</span>
+pop &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">ind =</span> <span class="dv">1</span>:<span class="dv">100000</span>, <span class="dt">visina =</span> <span class="kw">rnorm</span>(<span class="dv">100000</span>, <span class="dv">175</span>, <span class="dv">25</span>))
+
+<span class="co"># sljedeća funkcija će nacrtati funkciju gustoće populacije (crno)</span>
+<span class="co"># te potom uzeti 10 uzoraka zadane veličine i njihove</span>
+<span class="co"># gustoće nacrtati na istom grafu (u zadanoj boji)</span>
+
+createSamplingPlot &lt;-<span class="st"> </span>function(sample_size, <span class="dt">color =</span> <span class="st">&quot;#5577FF&quot;</span>) {
+  g &lt;-<span class="st"> </span><span class="kw">ggplot</span>() +<span class="st"> </span><span class="kw">geom_density</span>(<span class="dt">data =</span> pop, <span class="kw">aes</span>(visina)) 
+  for (i in <span class="dv">1</span>:<span class="dv">10</span>) g &lt;-<span class="st"> </span>g +<span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_density</span>(<span class="dt">data =</span> <span class="kw">sample_n</span>(pop, sample_size), <span class="kw">aes</span>(visina),  <span class="dt">linetype =</span> <span class="dv">2</span>, <span class="dt">color =</span> color, <span class="dt">alpha =</span> <span class="fl">0.02</span>) 
+  g
+}</code></pre></div>
+<hr />
+<p><strong>Zadatak 14.13 - gustoće razdiobe uzoraka populacije</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># nacrtajte kako izgledaju gustoće uzoraka od 10, 100 i 1000 obzervacija</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">createSamplingPlot</span>(<span class="dv">10</span>)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-505-1.png" width="672" /></p>
+</div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">createSamplingPlot</span>(<span class="dv">100</span>)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-506-1.png" width="672" /></p>
+</div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">createSamplingPlot</span>(<span class="dv">1000</span>)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-507-1.png" width="672" /></p>
+</div>
+<hr />
+<p>Vidimo da s povećanjem veličine uzorka njegova distribucija sve više i više liči na originalnu distribuciju te da već uzorak od 100 elemenata (koji predstavlja tek 0.01% populacije) zapravo sasvim dobro reprezentira populaciju. Ovo znači da možemo biti relativno sigurni kako njegova aritmetička sredina i standardna devijacija zapravo dovoljno dobro odgovaraju sredini i devijaciji cijele populacije. Ovo je zapravo srž inferencijalne statistike - ako koristimo dovoljno velik nasumično odabran uzorak populacije koja se ravna po normalnoj razdiobi, onda statistike uzorka dovoljno dobro odražavaju statistike populacije.</p>
+<p>U pravilu za reprezentativan uzorak tražimo sljedeće:</p>
+<ul>
+<li>nasumičan odabir barem 30 uzoraka</li>
+<li>normalnu razdiobu gledanog parametra u populaciji</li>
+</ul>
+<p>Nasumični odabir uzorka u praksi često predstavlja najveći problem (npr. anketiranjem obično ne dobivamo pravi slučajni uzorak populacije ljudi već samo onih koji su voljni ispuniti anketu). Zbog toga je ponekad jako teško ukloniti pristranost iz uzorka tj. dobiti uzorak koji je uistinu “nasumičan”. S druge strane, normalnost razdiobe parametra kojeg procjenjujemo nije nužno problematična - ako je razdioba “nakrivljena” često je dovoljno odabrati tek malo veći uzorak kako bi dobili dobru procjenu.</p>
+<p>Dakle, zaključili smo da odabirom dovoljno velikog, slučajno odabranog uzorka možemo očekivati dobru procjenu parametra (npr. aritmetičke sredine) populacije. No isto tako jasno je da će svaki uzorak imati “svoju” sredinu, koja može biti manje ili više udaljena od stvarne sredine. Ovdje se pojavljuje interesantan fenomen koji se naziva <em>centralni teorem</em>.</p>
+<p>Pojam <em>centralnog teorema</em> ćemo parafrazirati (i malo pojednostaviti) ovako: ako ponavljamo uzorkovanje i zapisujemo aritmetičke sredine svakog pojedinog uzorka, onda ćemo se uvjeriti da se te sredine ravnaju po “svojoj” normalnoj razdiobi čija je sredina jednaka aritmetičkoj sredini originalne populacije, a devijacija jednaka standardnoj devijaciji populacije podijeljenoj sa korijenom veličine uzorka (tzv. “standardnom greškom”).</p>
+<p>Ovo možemo interpretirati i ovako - za dovoljno veliki nasumični uzorak vrlo su male šanse da isti nije “reprezentativan”, tj. možemo biti prilično sigurni da njegove statistike odgovaraju statistikama originalne populacije.</p>
+<p>Dokažimo ovo simulacijom.</p>
+<hr />
+<p><strong>Zadatak 14.14 - centralni teorem - simulacija</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+
+<span class="co"># stvorite matricu 1000 x 100, gdje svaki redak predstavlja</span>
+<span class="co"># slučajni uzorak od 100 vrijednosti varijable pop$visine iz prethodnog zadatka</span>
+<span class="co"># matricu pohranite u varijablu `uzorci`</span>
+
+
+<span class="co"># izračunajte aritmetičku sredinu svakog uzorka</span>
+<span class="co"># koristite funkciju `apply`</span>
+<span class="co"># rezultate pohranite u vektor `sredineUzorci`</span>
+
+
+<span class="co"># ispišite aritmetičku sredinu i standardnu devijaciju vektora `sredineUzorci`</span>
+
+<span class="co"># ispišite aritmetičku sredinu i standardnu devijaciju vektora `pop$visina`</span>
+
+
+<span class="co"># uz pomoć sljedeće funkcije na istom grafu nacrtajte gustoću </span>
+<span class="co"># razdiobe vektora pop$visine i vektora `sredineUzorci`</span>
+<span class="co"># ggplot(pop, aes(visina)) + geom_density() +</span>
+<span class="co">#  geom_density(data = data.frame(x = 1:1000, sredine = sredineUzorci), </span>
+<span class="co">#   aes(sredine), color = &quot;red&quot;)</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+
+<span class="co"># stvorite matricu 1000 x 100, gdje svaki redak predstavlja</span>
+<span class="co"># slučajni uzorak od 100 vrijednosti varijable pop$visine iz prethodnog zadatka</span>
+<span class="co"># matricu pohranite u varijablu `uzorci`</span>
+
+<span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">sample</span>(pop$visina, <span class="dv">100</span>)) %&gt;%<span class="st"> </span>t -&gt;<span class="st"> </span>uzorci
+
+<span class="co"># izračunajte aritmetičku sredinu svakog uzorka</span>
+<span class="co"># koristite funkciju `apply`</span>
+<span class="co"># rezultate pohranite u vektor `sredineUzorci`</span>
+sredineUzorci &lt;-<span class="st"> </span><span class="kw">apply</span>(uzorci, <span class="dv">1</span>, mean)
+
+<span class="co"># ispišite aritmetičku sredinu i standardnu devijaciju vektora `sredineUzorci`</span>
+<span class="kw">mean</span>(sredineUzorci)
+<span class="kw">sd</span>(sredineUzorci)
+<span class="kw">cat</span>(<span class="st">&quot;--------------</span><span class="ch">\n</span><span class="st">&quot;</span>)
+
+<span class="co"># ispišite aritmetičku sredinu i standardnu devijaciju vektora `pop$visina`</span>
+<span class="kw">mean</span>(pop$visina)
+<span class="kw">sd</span>(pop$visina)
+
+<span class="co"># uz pomoć sljedeće funkcije na istom grafu nacrtajte gustoću </span>
+<span class="co"># razdiobe vektora pop$visine i vektora `sredineUzorci`</span>
+ <span class="kw">ggplot</span>(pop, <span class="kw">aes</span>(visina)) +<span class="st"> </span><span class="kw">geom_density</span>() +
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">1000</span>, <span class="dt">sredine =</span> sredineUzorci), 
+   <span class="kw">aes</span>(sredine), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-509-1.png" width="672" /></p>
+<pre><code>## [1] 175.1648
+## [1] 2.506297
+## --------------
+## [1] 175.0732
+## [1] 24.98646</code></pre>
+</div>
+<div id="testiranje-hipoteza" class="section level3">
+<h3><span class="header-section-number">14.2.1</span> Testiranje hipoteza</h3>
+<p>Dakle centralni teorem nam pomaže da “vjerujemo” inferencijalnoj statistici. Njime se možemo koristiti i kod tzv. <em>testiranja hipoteza</em>.</p>
+<p>“Testiranje hipoteza” je statistički postupak u kojem na osnovu danog uzorka pokušavamo odrediti da li imamo dovoljno dokaza da li neka tvrdnja vrijedi za cijelu populaciju. Naziv postupka kreće se od toga da je ta tvrdnja zapravo “hipoteza” koju onda pokušavamo dokazati. Formalno to provodimo korištenjem dvije hipoteze:</p>
+<ul>
+<li><em>nul-hipoteza</em> ili <span class="math inline">\(H_0\)</span>, koja predstavlja “položaj skeptika”; to je uglavnom hipoteza koja tvrdi da promjene nema ili da nešto ne vrijedi</li>
+<li><em>alternativna hipoteza</em>, ili <span class="math inline">\(H_A\)</span> koja tvrdi da neke promjene ima i za to pokušava uz pomoć uzorka pružiti dovoljne dokaze</li>
+</ul>
+<p>Kako alternativna hipoteza “dokazuje” tvrdnju? Uglavnom se koristimo poznavanjem centralnog teorema i činjenice da dovoljno veliki uzorak zapravo vrlo dobro procjenjuje neki parametar populacije. Ako uzmemo u obzir izračun standardne greške (standardna devijacija uzorka podijeljena sa veličinom uzorka), te centralni teorem koji navodi da se parametar uzorak “normalno rasipa” oko stvarne vrijednosti s devijacijom standardne greške, onda se s tim možemo poslužiti kao dokazom da je prilično nevjerojatno uočiti određene parametre uzorke ako je nul-hipoteza istinita.</p>
+<p>Točne metode provedbe testa hipoteza za različite tipove varijabli i scenarije potražite u knjizi “OpenIntro statistics” koja daje vrlo detaljan pregled ovog postupka uz mnoštvo primjera. Mi ćemo u nastavku opet samo demonstrirati osnovne ideje uz pomoć prikladne simulacije.</p>
+<p>Pretpostavimo sljedeći scenarij: populacija od 60 studenata ide na usmeni ispit. Studenti su nasumično raspoređeni kod dva profesora (nazovimo ih “A” i “B”), gdje svaki ispituje po 30 studenata. Nakon ispita kod profesora A ispit je položilo 20 studenata, dok je kod profesora B ispit položilo samo 12 studenata. Studenti koji su odgovarali ispit kod profesora B žale se da je za njih ispit bio “stroži” tj. da profesori nisu imali jednake kriterije. Možemo li simulacijom provjeriti da li za to postoje konkretni statistički dokazi?</p>
+<p>Pretpostavimo da je “strogost” profesora jednaka, tj. da bi studenti bili jednako uspješni neovisno o tome kod kojeg profesora su polagali ispit. Naša nul-hipoteza je dakle sljedeća:</p>
+<p><em>Odabir profesora ne utječe na ishod polaganja ispita.</em></p>
+<p>dok bi alternativna hipoteza bila, naravno, da je to netočno i da će konačni rezultat biti između ostaloga ovisan i tome kod kojeg je profesora student završio.</p>
+<p>Provedimo simulaciju na sljedeći način:</p>
+<ul>
+<li>svakog studenta opišemo rednim brojem i varijablom koja opisuje da li je prošao ili pao
+<ul>
+<li>32 studenta je prošlo ispit, oni dobivaju oznaku <code>T</code></li>
+<li>28 je palo, oni dobivaju oznaku <code>F</code></li>
+</ul></li>
+<li>studente slučajno rasporedimo kod profesora <code>A</code> i <code>B</code>
+<ul>
+<li>nasumično odabranih 30 studenata dobiva oznaku <code>A</code></li>
+<li>ostatak dobiva oznaku <code>B</code></li>
+</ul></li>
+<li>izračunamo apsolutnu razliku broja položenih ispita kod profesora <code>A</code> i <code>B</code></li>
+<li>ponavljamo cijeli postupak veći broj puta i gledamo kako se ponašaju razlike prolaznosti</li>
+</ul>
+<p>Nakon što ponovimo ovaj postupak veći broj puta možemo pogledati u kojem postotku slučajeva je razlika u broju polaganja bila veća ili jednaka 8. Ako je to manje od 5% slučajeva, što se u statistici smatra nekom okvirnom granicom kada stvari postaju “nevjerojatne”, možemo pretpostaviti da profesori nisu jednako strogi.</p>
+<p>Pokušajmo provesti ovu simulaciju u jeziku R. Iako smo rekli da u jeziku R u pravilu ne bi trebali koristiti petlje, kako čitatelji ne bi dobili dojam da su one apsolutno nedopustive, u ovom zadatku ćemo se poslužiti <code>for</code> petljom kako bi bilo jasnije što simulacijom želimo postići. Čitatelji mogu za vježbu preinačiti kod tako da se izbjegne korištenje petlje te provjeriti postiže li se s tim veća učinkovitost simulacije.</p>
+<hr />
+<p><strong>Zadatak 14.15 - test hipoteza - simulacija</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+studenti &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">id =</span> <span class="dv">1</span>:<span class="dv">60</span>, <span class="dt">prosao =</span> <span class="kw">c</span>(<span class="kw">rep</span>(T, <span class="dv">32</span>), <span class="kw">rep</span>(F, <span class="dv">28</span>)),
+                       <span class="dt">profesor =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">60</span>))
+
+rez &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="dv">10000</span>)
+
+for (i in <span class="dv">1</span>:<span class="dv">10000</span>) {
+  <span class="co"># stupac profesor napunite sa 30 slova A i 30 slova B, nasumično raspoređenim</span>
+  <span class="co"># izračunajte apsolutnu razliku položenih ispita kod oba profesora</span>
+  <span class="co"># upišite razliku u varijablu `rez` na indeks `i`</span>
+}
+
+<span class="co"># nacrtajte stupčani graf razlika</span>
+
+
+<span class="co"># izračunajte u koliko slučajeva je apsolutna razlika</span>
+<span class="co"># jednaka ili veća broju od 8 studenata</span></code></pre></div>
+<div class="fold s o">
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+studenti &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">id =</span> <span class="dv">1</span>:<span class="dv">60</span>, <span class="dt">prosao =</span> <span class="kw">c</span>(<span class="kw">rep</span>(T, <span class="dv">32</span>), <span class="kw">rep</span>(F, <span class="dv">28</span>)),
+                       <span class="dt">profesor =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">60</span>))
+
+rez &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="dv">10000</span>)
+
+for (i in <span class="dv">1</span>:<span class="dv">10000</span>) {
+  studenti$profesor &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>), <span class="dt">each =</span> <span class="dv">30</span>), <span class="dv">60</span>)
+  
+  rez[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(studenti[studenti$profesor ==<span class="st"> &quot;A&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;prosao&quot;</span>)]) -<span class="st"> </span>
+<span class="st">              </span><span class="kw">sum</span>(studenti[studenti$profesor ==<span class="st"> &quot;B&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;prosao&quot;</span>)])
+}
+
+<span class="co"># nacrtajte stupčani graf razlika</span>
+<span class="kw">ggplot</span>(<span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">10000</span>, <span class="dt">y =</span> rez), <span class="kw">aes</span>(y, ..prop..)) +<span class="st"> </span><span class="kw">geom_bar</span>() +
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(-<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">2</span>))</code></pre></div>
+<p><img src="osnoveR_files/figure-html/unnamed-chunk-511-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># izračunajte u koliko slučajeva je apsolutna razlika</span>
+<span class="co"># jednaka ili veća broju od 8 studenata</span>
+<span class="kw">mean</span>(<span class="kw">abs</span>(rez) &gt;=<span class="st"> </span><span class="dv">8</span>)</code></pre></div>
+<pre><code>## [1] 0.0707</code></pre>
+</div>
+<p>Rezultat od oko 7% nam zapravo govori sljedeće: iako je relativno malo vjerojatno da bi kod profesora sa jednakim kriterijima postojala tolika razlika u prolaznosti, to i dalje nije toliko malo vjerojatno da bi mogli u potpunosti izuzeti hipotezu da su profesori “jednako strogi”. Drugim riječima, rezultati simulacije su takvi da ne možemo pobiti nul-hipotezu.</p>
+<p>Vratimo se još malo primjeru. Što bi se dogodilo da u našem izračunu vjerojatnosti nismo gledali apsolutnu vrijednost razlike, već da smo samo gledali koliko je vjerojatno da profesor A ima 8 studenata koji su položili ispit više od profesora B? U tom slučaju bismo izračunali vjerojatnost od samo 3.5%, te bismo zaključili da pobijamo nul-hipotezu - što bi bilo pogrešno, budući da smo u ovom scenariju zanemarili sve slučajeve kada je (iz razloga slučajnog odabira) profesor A “stroži” od profesora B. Ovo nam govori da moramo biti vrlo pažljivi kako kod postavljanja hipoteza, tako i kod provedbe analize i interpretacije rezultata.</p>
+<hr />
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Programirajmo u R-u</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://www.fer.unizg.hr/en/damir.pintar" property="cc:attributionName" rel="cc:attributionURL">Damir Pintar</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://ratnip.github.io/FER_OPJR/" rel="dct:source">https://ratnip.github.io/FER_OPJR/</a></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="razdiobe.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regresija.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["osnoveR.pdf"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"edit": null,
+"download": null,
+"search": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
